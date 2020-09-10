@@ -1,11 +1,27 @@
 package com.jetbrains.handson.mpp.mobile
 
+import com.jetbrains.handson.mpp.mobile.models.FaresModel
+import io.ktor.client.HttpClient
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.get
 import io.ktor.http.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.serialization.UnstableDefault
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import kotlin.coroutines.CoroutineContext
 
 class ApplicationPresenter: ApplicationContract.Presenter() {
+
+    val client = HttpClient() {
+        install(JsonFeature) {
+            serializer = KotlinxSerializer(Json {ignoreUnknownKeys=true})
+        }
+    }
 
     private val dispatchers = AppDispatchersImpl()
     private var view: ApplicationContract.View? = null
@@ -28,9 +44,15 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     }
 
     override fun onTimesRequested() {
-        val departureStation = view?.getDepartureStation();
-        val arrivalStation = view?.getArrivalStation();
+        val departureStation = view!!.getDepartureStation()
+        val arrivalStation = view!!.getArrivalStation()
+        GlobalScope.launch {
+            val model: FaresModel = getTrainTimeData(departureStation, arrivalStation)
+            println(model)
+        }
+    }
 
+    private suspend fun getTrainTimeData(departureStation: Station, arrivalStation: Station): FaresModel {
         val now = "2020-10-14T19:30:00.000+01:00";
 
         val builder = URLBuilder(
@@ -51,6 +73,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         builder.parameters.append("outboundDateTime", now)
         builder.parameters.append("outboundIsArriveBy", "false")
 
-        view?.openUrl(builder.buildString());
+        return client.get(builder.buildString())
     }
 }
