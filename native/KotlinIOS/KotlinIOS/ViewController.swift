@@ -66,5 +66,11 @@ extension ViewController: ApplicationContractView {
         label.text = text
     }
     
-    
+    func openUrl(url: String) {
+        guard let link = URL(string: url) else {
+          return //be safe
+        }
+        
+        UIApplication.shared.open(link, options: [:], completionHandler: nil)
+    }
 }

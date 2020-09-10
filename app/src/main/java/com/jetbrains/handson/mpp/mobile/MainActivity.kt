@@ -1,14 +1,14 @@
 package com.jetbrains.handson.mpp.mobile
 
-import android.app.Activity
-import android.graphics.Color
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+
 
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         // Set the drop down view to use a default spinner item on top of the custom text format
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerDep.adapter = adapter
-        spinnerArr.adapter = adapter
+        spinnerDep?.adapter = adapter
+        spinnerArr?.adapter = adapter
     }
 
     override fun setLabel(text: String) {
@@ -49,11 +49,16 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     override fun getDepartureStation(): Station {
-        return spinnerDep.selectedItem as Station
+        return spinnerDep?.selectedItem as Station
+    }
+
+    override fun openUrl(url: String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
     }
 
     override fun getArrivalStation(): Station {
-        return spinnerArr.selectedItem as Station
+        return spinnerArr?.selectedItem as Station
     }
 
     fun buttonClick(view: View) {
