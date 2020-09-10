@@ -10,6 +10,8 @@ interface ApplicationContract {
 
         fun showAlert(message: String)
 
+        fun openUrl(url: String)
+
         fun getDepartureStation(): Station
 
         fun getArrivalStation(): Station
