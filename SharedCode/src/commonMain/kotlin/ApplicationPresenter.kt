@@ -9,7 +9,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     private var view: ApplicationContract.View? = null
     private val job: Job = SupervisorJob()
     private val stations: List<Station> = listOf(
-        Station("Kings cross", "KGX"),
+        Station("Kings Cross", "KGX"),
         Station("York", "YRK"),
         Station("Edinburgh Waverley", "EDB"),
         Station("Leeds", "LDS"),
@@ -26,6 +26,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     }
 
     override fun onTimesRequested() {
-        view?.showAlert("Button was tapped");
+        view?.setLabel("Button was tapped");
     }
 }
