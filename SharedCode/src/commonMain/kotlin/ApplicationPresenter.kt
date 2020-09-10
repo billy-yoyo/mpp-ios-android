@@ -8,8 +8,8 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     private val dispatchers = AppDispatchersImpl()
     private var view: ApplicationContract.View? = null
     private val job: Job = SupervisorJob()
-    private val stations: Array<Station> = arrayOf(
-        Station("Kings cross", "KGX"),
+    private val stations: List<Station> = listOf(
+        Station("Kings Cross", "KGX"),
         Station("York", "YRK"),
         Station("Edinburgh Waverley", "EDB"),
         Station("Leeds", "LDS"),
@@ -26,6 +26,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     }
 
     override fun onTimesRequested() {
-        view?.showAlert("Button was tapped");
+        view?.setLabel("Button was tapped");
     }
 }

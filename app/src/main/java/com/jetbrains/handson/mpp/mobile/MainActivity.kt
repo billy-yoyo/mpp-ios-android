@@ -12,22 +12,26 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
+    private var presenter: ApplicationPresenter = ApplicationPresenter()
+    private var spinnerDep: Spinner? = null
+    private var spinnerArr: Spinner? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val presenter = ApplicationPresenter()
+        spinnerDep = findViewById(R.id.departure_station)
+        spinnerArr = findViewById(R.id.arrival_station)
+
         presenter.onViewTaken(this)
+    }
 
-        // Find departure and arrival spinners from XML
-        val spinnerDep: Spinner = findViewById(R.id.departure_station)
-        val spinnerArr: Spinner = findViewById(R.id.arrival_station)
-
+    override fun setStations(stations: List<Station>) {
         // Create an ArrayAdapter using the string array and the custom text formatting
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+        val adapter: ArrayAdapter<Station> = ArrayAdapter<Station>(
             applicationContext,
             R.layout.spinner_item,
-            arrayOf("Station1", "Station2", "Station3", "Station4", "Station5")
+            stations
         )
 
         // Set the drop down view to use a default spinner item on top of the custom text format
@@ -38,5 +42,21 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
     override fun setLabel(text: String) {
         findViewById<TextView>(R.id.main_text).text = text
+    }
+
+    override fun showAlert(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getDepartureStation(): Station {
+        return spinnerDep.selectedItem as Station
+    }
+
+    override fun getArrivalStation(): Station {
+        return spinnerArr.selectedItem as Station
+    }
+
+    fun buttonClick(view: View) {
+        presenter.onTimesRequested()
     }
 }
