@@ -15,6 +15,10 @@ interface ApplicationContract {
         fun getDepartureStation(): Station
 
         fun getArrivalStation(): Station
+
+        fun addTicket(ticket: TicketInfo)
+
+        fun setContext(context: ViewContext)
     }
 
     abstract class Presenter: CoroutineScope {
