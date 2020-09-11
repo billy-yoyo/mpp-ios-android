@@ -9,9 +9,13 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: CustomListAdapter
 
     private var presenter: ApplicationPresenter = ApplicationPresenter()
     private lateinit var spinnerDep: Spinner
@@ -24,9 +28,12 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         spinnerDep = findViewById(R.id.departure_station)
         spinnerArr = findViewById(R.id.arrival_station)
 
-
-
         presenter.onViewTaken(this)
+
+        recyclerView = findViewById(R.id.ticket_recycler)
+        viewAdapter = CustomListAdapter(listOf("Test 1", "Test 2", "Test 3", "Test 4", "Test 5", "Test 6", "Test 7", "Test 8"))
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = viewAdapter
     }
 
     override fun setStations(stations: List<Station>) {
@@ -60,6 +67,14 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     override fun openUrl(url: String) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(browserIntent)
+    }
+
+    override fun addTicket(ticket: TicketInfo) {
+        //TODO("Not yet implemented")
+    }
+
+    override fun clearTickets() {
+        //TODO("Not yet implemented")
     }
 
     fun buttonClick(view: View) {
