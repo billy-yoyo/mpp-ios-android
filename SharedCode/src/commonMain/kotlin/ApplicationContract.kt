@@ -11,6 +11,10 @@ interface ApplicationContract {
         fun showAlert(message: String)
 
         fun openUrl(url: String)
+
+        fun addTicket(ticket: TicketInfo)
+
+        fun clearTickets()
     }
 
     abstract class Presenter: CoroutineScope {
