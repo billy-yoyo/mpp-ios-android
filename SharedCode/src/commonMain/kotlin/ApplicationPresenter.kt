@@ -3,19 +3,15 @@ package com.jetbrains.handson.mpp.mobile
 import com.jetbrains.handson.mpp.mobile.models.FaresModel
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeSpan
-import com.soywiz.klock.hours
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
 import io.ktor.http.*
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 import kotlin.coroutines.CoroutineContext
 
 class ApplicationPresenter: ApplicationContract.Presenter() {
@@ -53,14 +49,15 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     override fun onTimesRequested() {
         val view = this.view
 
-        GlobalScope.launch {
-            view.clearTickets()
+        launch {
+            view.setTickets(listOf()) // clear tickets
             val model: FaresModel = getTrainTimeData(departureStation!!, arrivalStation!!)
+            val tickets: MutableList<TicketInfo> = mutableListOf()
             model.outboundJourneys.forEach { journey ->
                 if (journey.tickets.isNotEmpty()) {
                     val minPrice = journey.tickets.minBy { it.priceInPennies }!!.priceInPennies
                     val maxPrice = journey.tickets.maxBy { it.priceInPennies }!!.priceInPennies
-                    view.addTicket(
+                    tickets.add(
                         TicketInfo(
                             journey.departureTime,
                             journey.arrivalTime,
@@ -70,6 +67,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
                     )
                 }
             }
+            view.setTickets(tickets)
         }
     }
 
@@ -83,8 +81,8 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         )
 
         builder.path("v1", "fares")
-        builder.parameters.append("originStation", departureStation!!.id)
-        builder.parameters.append("destinationStation", arrivalStation!!.id)
+        builder.parameters.append("originStation", departureStation.id)
+        builder.parameters.append("destinationStation", arrivalStation.id)
         builder.parameters.append("noChanges", "false")
         builder.parameters.append("numberOfAdults", "2")
         builder.parameters.append("numberOfChildren", "0")

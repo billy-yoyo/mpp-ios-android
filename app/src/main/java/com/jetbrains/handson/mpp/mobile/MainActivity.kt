@@ -14,10 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
+    // Requirements for Recycler view
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: CustomListAdapter
 
+    // Connection to presenter
     private var presenter: ApplicationPresenter = ApplicationPresenter()
+
+    // Spinners
     private lateinit var spinnerDep: Spinner
     private lateinit var spinnerArr: Spinner
 
@@ -27,13 +31,9 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         spinnerDep = findViewById(R.id.departure_station)
         spinnerArr = findViewById(R.id.arrival_station)
+        recyclerView = findViewById(R.id.ticket_recycler)
 
         presenter.onViewTaken(this)
-
-        recyclerView = findViewById(R.id.ticket_recycler)
-        viewAdapter = CustomListAdapter(listOf("Test 1", "Test 2", "Test 3", "Test 4", "Test 5", "Test 6", "Test 7", "Test 8"))
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = viewAdapter
     }
 
     override fun setStations(stations: List<Station>) {
@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
             UpdatePresenterStationListener(true, presenter, adapter)
         spinnerArr.onItemSelectedListener =
             UpdatePresenterStationListener(false, presenter, adapter)
-
     }
 
     override fun setLabel(text: String) {
@@ -69,12 +68,10 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         startActivity(browserIntent)
     }
 
-    override fun addTicket(ticket: TicketInfo) {
-        //TODO("Not yet implemented")
-    }
-
-    override fun clearTickets() {
-        //TODO("Not yet implemented")
+    override fun setTickets(tickets: List<TicketInfo>) {
+        viewAdapter = CustomListAdapter(tickets)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = viewAdapter
     }
 
     fun buttonClick(view: View) {

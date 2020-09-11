@@ -12,9 +12,7 @@ interface ApplicationContract {
 
         fun openUrl(url: String)
 
-        fun addTicket(ticket: TicketInfo)
-
-        fun clearTickets()
+        fun setTickets(tickets: List<TicketInfo>)
     }
 
     abstract class Presenter: CoroutineScope {
