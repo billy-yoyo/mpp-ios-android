@@ -1,6 +1,9 @@
 package com.jetbrains.handson.mpp.mobile
 
 import com.jetbrains.handson.mpp.mobile.models.FaresModel
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.DateTimeSpan
+import com.soywiz.klock.hours
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
@@ -41,7 +44,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     override fun onViewTaken(view: ApplicationContract.View) {
         this._view = view
         view.setLabel(createApplicationScreenMessage())
-        view.setStations(stations);
+        view.setStations(stations)
     }
 
     override fun onTimesRequested() {
@@ -49,7 +52,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         val departureStation = view.getDepartureStation()
         val arrivalStation = view.getArrivalStation()
         GlobalScope.launch {
-            view.setContext(ViewContext.TicketView)
+            view.clearTickets()
             val model: FaresModel = getTrainTimeData(departureStation, arrivalStation)
             model.outboundJourneys.forEach { journey ->
                 if (journey.tickets.isNotEmpty()) {
@@ -69,7 +72,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     }
 
     private suspend fun getTrainTimeData(departureStation: Station, arrivalStation: Station): FaresModel {
-        val now = "2020-10-14T19:30:00.000+01:00";
+        val now = DateTime.nowLocal().plus(DateTimeSpan(minutes=1)).format("YYYY-MM-dd'T'HH:mm:ss.SSSXXX")
 
         val builder = URLBuilder(
             URLProtocol.HTTPS,
@@ -77,15 +80,13 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
             DEFAULT_PORT
         )
 
-        builder.path("v1", "fares");
-        builder.parameters.append("originStation", departureStation.id);
-        builder.parameters.append("destinationStation", arrivalStation.id);
-        builder.parameters.append("noChanges", "false");
-        builder.parameters.append("numberOfAdults", "2");
+        builder.path("v1", "fares")
+        builder.parameters.append("originStation", departureStation.id)
+        builder.parameters.append("destinationStation", arrivalStation.id)
+        builder.parameters.append("noChanges", "false")
+        builder.parameters.append("numberOfAdults", "2")
         builder.parameters.append("numberOfChildren", "0")
         builder.parameters.append("journeyType", "single")
-        builder.parameters.append("inboundDateTime", now)
-        builder.parameters.append("inboundIsArriveBy", "false");
         builder.parameters.append("outboundDateTime", now)
         builder.parameters.append("outboundIsArriveBy", "false")
 

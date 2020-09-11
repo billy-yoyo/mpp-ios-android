@@ -18,7 +18,7 @@ interface ApplicationContract {
 
         fun addTicket(ticket: TicketInfo)
 
-        fun setContext(context: ViewContext)
+        fun clearTickets()
     }
 
     abstract class Presenter: CoroutineScope {
