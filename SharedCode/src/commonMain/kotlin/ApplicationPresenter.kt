@@ -52,11 +52,10 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
     override fun onTimesRequested() {
         val view = this.view
-        val departureStation = view.getDepartureStation()
-        val arrivalStation = view.getArrivalStation()
+
         GlobalScope.launch {
             view.clearTickets()
-            val model: FaresModel = getTrainTimeData(departureStation, arrivalStation)
+            val model: FaresModel = getTrainTimeData(departureStation!!, arrivalStation!!)
             model.outboundJourneys.forEach { journey ->
                 if (journey.tickets.isNotEmpty()) {
                     val minPrice = journey.tickets.minBy { it.priceInPennies }!!.priceInPennies
