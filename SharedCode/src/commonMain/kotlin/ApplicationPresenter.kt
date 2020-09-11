@@ -38,6 +38,9 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         Station("Cattal", "CTL")
     )
 
+    private var departureStation: Station? = null
+    private var arrivalStation: Station? = null
+
     override val coroutineContext: CoroutineContext
         get() = dispatchers.main + job
 
@@ -81,8 +84,8 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         )
 
         builder.path("v1", "fares")
-        builder.parameters.append("originStation", departureStation.id)
-        builder.parameters.append("destinationStation", arrivalStation.id)
+        builder.parameters.append("originStation", departureStation!!.id)
+        builder.parameters.append("destinationStation", arrivalStation!!.id)
         builder.parameters.append("noChanges", "false")
         builder.parameters.append("numberOfAdults", "2")
         builder.parameters.append("numberOfChildren", "0")
@@ -91,5 +94,13 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         builder.parameters.append("outboundIsArriveBy", "false")
 
         return client.get(builder.buildString())
+    }
+
+    override fun setDepartureStation(station: Station?) {
+        departureStation = station
+    }
+
+    override fun setArrivalStation(station: Station?) {
+        arrivalStation = station
     }
 }

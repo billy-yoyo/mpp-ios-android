@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
@@ -13,8 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
     private var presenter: ApplicationPresenter = ApplicationPresenter()
-    private var spinnerDep: Spinner? = null
-    private var spinnerArr: Spinner? = null
+    private lateinit var spinnerDep: Spinner
+    private lateinit var spinnerArr: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         spinnerDep = findViewById(R.id.departure_station)
         spinnerArr = findViewById(R.id.arrival_station)
+
+
 
         presenter.onViewTaken(this)
     }
@@ -36,8 +39,14 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         // Set the drop down view to use a default spinner item on top of the custom text format
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerDep?.adapter = adapter
-        spinnerArr?.adapter = adapter
+        spinnerDep.adapter = adapter
+        spinnerArr.adapter = adapter
+
+        spinnerDep.onItemSelectedListener =
+            UpdatePresenterStationListener(true, presenter, adapter)
+        spinnerArr.onItemSelectedListener =
+            UpdatePresenterStationListener(false, presenter, adapter)
+
     }
 
     override fun setLabel(text: String) {
@@ -48,20 +57,34 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         TODO("Not yet implemented")
     }
 
-    override fun getDepartureStation(): Station {
-        return spinnerDep?.selectedItem as Station
-    }
-
     override fun openUrl(url: String) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(browserIntent)
     }
 
-    override fun getArrivalStation(): Station {
-        return spinnerArr?.selectedItem as Station
-    }
-
     fun buttonClick(view: View) {
         presenter.onTimesRequested()
+    }
+
+    class UpdatePresenterStationListener(
+        private val isDeparture: Boolean,
+        private val presenter: ApplicationPresenter,
+        private val adapter: ArrayAdapter<Station>
+    ) : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>, item: View?, position: Int, id: Long) {
+            if (isDeparture) {
+                presenter.setDepartureStation(adapter.getItem(position))
+            } else {
+                presenter.setArrivalStation(adapter.getItem(position))
+            }
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            if (isDeparture) {
+                presenter.setDepartureStation(null)
+            } else {
+                presenter.setArrivalStation(null);
+            }
+        }
     }
 }

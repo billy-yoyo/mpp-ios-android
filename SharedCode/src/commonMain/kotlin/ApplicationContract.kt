@@ -12,10 +12,6 @@ interface ApplicationContract {
 
         fun openUrl(url: String)
 
-        fun getDepartureStation(): Station
-
-        fun getArrivalStation(): Station
-
         fun addTicket(ticket: TicketInfo)
 
         fun clearTickets()
@@ -25,5 +21,9 @@ interface ApplicationContract {
         abstract fun onViewTaken(view: View)
 
         abstract fun onTimesRequested()
+
+        abstract fun setDepartureStation(station: Station?)
+
+        abstract fun setArrivalStation(station: Station?)
     }
 }
