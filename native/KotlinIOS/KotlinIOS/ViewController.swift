@@ -39,6 +39,13 @@ extension ViewController :  UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        if (component == 0) {
+            presenter.setDepartureStation(station: stationData[row])
+        } else {
+            presenter.setArrivalStation(station: stationData[row])
+        }
+        
         return stationData[row].name
     }
 }
@@ -46,14 +53,11 @@ extension ViewController :  UIPickerViewDelegate, UIPickerViewDataSource {
 extension ViewController: ApplicationContractView {
     func setStations(stations: [Station]) {
         stationData = stations;
-    }
-    
-    func getArrivalStation() -> Station {
-        return stationData[stations.selectedRow(inComponent: 1)];
-    }
-    
-    func getDepartureStation() -> Station {
-        return stationData[stations.selectedRow(inComponent: 0)];
+            
+        if (!stations.isEmpty) {
+            presenter.setDepartureStation(station: stations[0])
+            presenter.setArrivalStation(station: stations[0])
+        }
     }
     
     func showAlert(message: String) {
@@ -71,6 +75,6 @@ extension ViewController: ApplicationContractView {
           return //be safe
         }
         
-        UIApplication.shared.open(link, options: [:], completionHandler: nil)
+        UIApplication.shared.open(link)
     }
 }

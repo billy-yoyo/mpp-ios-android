@@ -10,7 +10,7 @@
     <TextView
             android:id="@+id/main_text"
             android:textSize="42sp"
-            android:layout_margin="5sp"
+            android:layout_margin="5dp"
             android:textAlignment="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,12 +22,12 @@
     <TextView
         android:id="@+id/departure_text"
         android:textSize="25sp"
-        android:layout_margin="5sp"
+        android:layout_margin="5dp"
         android:gravity="start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/departure_text"
-        app:layout_constraintBottom_toTopOf="@id/departure_station"
+        app:layout_constraintTop_toBottomOf="@id/main_text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
@@ -35,16 +35,14 @@
         android:id="@+id/departure_station"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3"/>
+        app:layout_constraintTop_toBottomOf="@id/departure_text"/>
 
     <TextView
         android:id="@+id/arrival_text"
         android:textSize="25sp"
-        android:layout_margin="5sp"
+        android:layout_margin="5dp"
         android:gravity="start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

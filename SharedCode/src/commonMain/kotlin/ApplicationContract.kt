@@ -11,15 +11,15 @@ interface ApplicationContract {
         fun showAlert(message: String)
 
         fun openUrl(url: String)
-
-        fun getDepartureStation(): Station
-
-        fun getArrivalStation(): Station
     }
 
     abstract class Presenter: CoroutineScope {
         abstract fun onViewTaken(view: View)
 
         abstract fun onTimesRequested()
+
+        abstract fun setDepartureStation(station: Station?)
+
+        abstract fun setArrivalStation(station: Station?)
     }
 }
