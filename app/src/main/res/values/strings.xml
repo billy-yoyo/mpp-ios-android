@@ -4,7 +4,7 @@
     <string name="departure_text">Select departure station:</string>
     <string name="arrival_text">Select destination:</string>
 
-    <string name="departure_time">Departs at: %s</string>
-    <string name="arrival_time">Arrives at: %s</string>
+    <string name="departure_time">Departs: %s</string>
+    <string name="arrival_time">Arrives: %s</string>
     <string name="prices">Prices: Between £%2$d and £%2$d</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.jetbrains.handson.mpp.mobile
 
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,20 +11,17 @@ class CustomListAdapter(private val tickets: List<TicketInfo>) : RecyclerView.Ad
     class CustomViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
         fun bindItems(departureTime: String, arrivalTime: String, maxPrice: Int, minPrice: Int) {
             val colDepTime = view.findViewById<TextView>(R.id.departure_time)
-            colDepTime.text = "Departs: " + departureTime.substring(11, 16)
+            colDepTime.text = "Departs: " + departureTime.substring(11, 16) // TODO("Use resource string instead")
 
             val colArrTime = view.findViewById<TextView>(R.id.arrival_time)
-            colArrTime.text = "Arrives: " + arrivalTime.substring(11, 16)
+            colArrTime.text = "Arrives: " + arrivalTime.substring(11, 16) // TODO("Use resource string instead")
 
-            val colMaxPrice = view.findViewById<TextView>(R.id.max_price)
+            val colPrices = view.findViewById<TextView>(R.id.prices)
             val strMax: StringBuilder = StringBuilder(maxPrice.toString())
-            strMax.insert(strMax.length - 2, ".")
-            colMaxPrice.text = "£$strMax"
-
-            val colMinPrice = view.findViewById<TextView>(R.id.min_price)
             val strMin = StringBuilder(minPrice.toString())
+            strMax.insert(strMax.length - 2, ".")
             strMin.insert(strMin.length - 2, ".")
-            colMinPrice.text = "£$strMin"
+            colPrices.text = "From £$strMin to £$strMax" // TODO("Use resource string instead")
         }
     }
 
