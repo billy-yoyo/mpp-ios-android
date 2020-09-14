@@ -18,16 +18,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         presenter.onViewTaken(view: self)
         
-        getTimesButton.setTitle("Get Times", for: .normal);
-        departureStationLabel.text = "Departure";
-        arrivalStationLabel.text = "Arrival";
+        getTimesButton.setTitle("Get Times", for: .normal)
+        departureStationLabel.text = "Departure"
+        arrivalStationLabel.text = "Arrival"
+        label.text = "TrainBoard"
         
-        stations.delegate = self;
-        stations.dataSource = self;
+        stations.delegate = self
+        stations.dataSource = self
     }
     
     @IBAction func getTimes(_ sender: Any) {
-        presenter.onTimesRequested();
+        presenter.onTimesRequested()
     }
     
     
@@ -35,11 +36,11 @@ class ViewController: UIViewController {
 
 extension ViewController :  UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2;
+        return 2
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return stationData.count;
+        return stationData.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -108,10 +109,6 @@ extension ViewController: ApplicationContractView {
         let alert = UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    func setLabel(text: String) {
-        label.text = text
     }
     
     func openUrl(url: String) {

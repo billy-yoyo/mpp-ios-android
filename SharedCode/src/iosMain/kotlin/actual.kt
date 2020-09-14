@@ -6,12 +6,6 @@ import platform.UIKit.UIDevice
 import platform.darwin.*
 import kotlin.coroutines.CoroutineContext
 
-actual fun platformName(): String {
-    return UIDevice.currentDevice.systemName() +
-            " " +
-            UIDevice.currentDevice.systemVersion
-}
-
 actual class AppDispatchersImpl: AppDispatchers {
     @SharedImmutable
     override val main: CoroutineDispatcher = NSQueueDispatcher(dispatch_get_main_queue())

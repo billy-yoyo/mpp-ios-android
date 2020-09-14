@@ -4,8 +4,6 @@ import kotlinx.coroutines.CoroutineScope
 
 interface ApplicationContract {
     interface View {
-        fun setLabel(text: String)
-
         fun setStations(stations: List<Station>)
 
         fun showAlert(message: String)

@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // TODO: replace use of magic string
+        findViewById<TextView>(R.id.main_text).text = "TrainBoard"
+
         spinnerDep = findViewById(R.id.departure_station)
         spinnerArr = findViewById(R.id.arrival_station)
         recyclerView = findViewById(R.id.ticket_recycler)
@@ -55,10 +58,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
             UpdatePresenterStationListener(true, presenter, adapter)
         spinnerArr.onItemSelectedListener =
             UpdatePresenterStationListener(false, presenter, adapter)
-    }
-
-    override fun setLabel(text: String) {
-        findViewById<TextView>(R.id.main_text).text = text
     }
 
     override fun showAlert(message: String) {
