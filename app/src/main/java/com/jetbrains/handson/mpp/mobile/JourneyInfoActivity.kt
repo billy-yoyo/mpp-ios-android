@@ -14,6 +14,6 @@ class JourneyInfoActivity : AppCompatActivity(), JourneyInfoContract.View  {
         val journey =
             (this.intent.extras?.getSerializable(JOURNEY) as JourneyInfoTransit).toJourneyInfo()
 
-        setContentView(R.layout.activity_main) // TODO: create new layout
+        setContentView(R.layout.activity_journey)
     }
 }
