@@ -1,6 +1,10 @@
 package com.jetbrains.handson.mpp.mobile
 
-data class JourneyInfo(val departureTime: String,
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class JourneyInfo(val id: Int,
+                       val departureTime: String,
                        val arrivalTime: String,
                        val minPrice: Int,
                        val maxPrice: Int) {

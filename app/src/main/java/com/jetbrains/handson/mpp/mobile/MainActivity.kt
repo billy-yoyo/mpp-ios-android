@@ -80,6 +80,18 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         presenter.onTimesRequested()
     }
 
+    override fun openJourneyView(journey: JourneyInfo, tickets: List<TicketInfo>) {
+        val bundle = Bundle()
+
+        bundle.putSerializable(JourneyInfoActivity.JOURNEY, JourneyInfoTransit.fromJourneyInfo(journey))
+
+
+        val intent = Intent(this, JourneyInfoActivity::class.java).apply {
+            putExtras(bundle)
+        }
+        startActivity(intent)
+    }
+
     class UpdatePresenterStationListener(
         private val isDeparture: Boolean,
         private val presenter: ApplicationPresenter,
