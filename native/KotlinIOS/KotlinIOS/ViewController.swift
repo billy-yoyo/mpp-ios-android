@@ -118,15 +118,8 @@ extension ViewController: ApplicationContractView {
         UIApplication.shared.open(link)
     }
     
-    func clearTickets() {
-        ticketData.removeAll()
-        
-        ticketTable.reloadData()
-    }
-    
-    func addTicket(ticket: TicketInfo) {
-        print(ticket.departureTime)
-        ticketData.append(ticket)
+    func setTickets(tickets: [TicketInfo]) {
+        ticketData = tickets
         
         ticketTable.reloadData()
     }
