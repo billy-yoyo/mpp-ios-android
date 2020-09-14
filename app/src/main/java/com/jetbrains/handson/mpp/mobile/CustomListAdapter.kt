@@ -25,7 +25,7 @@ class CustomListAdapter(private val journeys: List<JourneyInfo>, private val con
 
         private fun formatDateTime(datetime: String): String {
             val inputFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZ", Locale.UK)
-            val outputFormatter = SimpleDateFormat("HH:mm" , Locale.UK)
+            val outputFormatter = SimpleDateFormat("MMM d, h:mm a" , Locale.UK)
             val date = inputFormatter.parse(datetime) ?: return datetime
             return outputFormatter.format(date)
         }
