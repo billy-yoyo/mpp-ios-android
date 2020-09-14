@@ -3,19 +3,13 @@ package com.jetbrains.handson.mpp.mobile
 import com.jetbrains.handson.mpp.mobile.models.FaresModel
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeSpan
-import com.soywiz.klock.hours
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
 import io.ktor.http.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
-import kotlinx.serialization.UnstableDefault
+import kotlinx.coroutines.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 import kotlin.coroutines.CoroutineContext
 
 class ApplicationPresenter: ApplicationContract.Presenter() {
@@ -53,7 +47,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     override fun onTimesRequested() {
         val view = this.view
 
-        GlobalScope.launch {
+        launch {
             view.clearTickets()
             val model: FaresModel = getTrainTimeData(departureStation!!, arrivalStation!!)
             model.outboundJourneys.forEach { journey ->
@@ -83,8 +77,8 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         )
 
         builder.path("v1", "fares")
-        builder.parameters.append("originStation", departureStation!!.id)
-        builder.parameters.append("destinationStation", arrivalStation!!.id)
+        builder.parameters.append("originStation", departureStation.id)
+        builder.parameters.append("destinationStation", arrivalStation.id)
         builder.parameters.append("noChanges", "false")
         builder.parameters.append("numberOfAdults", "2")
         builder.parameters.append("numberOfChildren", "0")
