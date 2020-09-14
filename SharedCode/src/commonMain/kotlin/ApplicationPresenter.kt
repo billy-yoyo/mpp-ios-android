@@ -81,7 +81,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
                 ticket.description,
                 ticket.priceInPennies
             )
-        }
+        }.sortedBy { ticket -> ticket.price }
 
         view.openJourneyView(journey, tickets)
     }
