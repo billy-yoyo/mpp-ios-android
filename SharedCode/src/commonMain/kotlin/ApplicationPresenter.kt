@@ -48,13 +48,14 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         val view = this.view
 
         launch {
-            view.clearTickets()
+            view.setTickets(listOf()) // clear tickets
             val model: FaresModel = getTrainTimeData(departureStation!!, arrivalStation!!)
+            val tickets: MutableList<TicketInfo> = mutableListOf()
             model.outboundJourneys.forEach { journey ->
                 if (journey.tickets.isNotEmpty()) {
                     val minPrice = journey.tickets.minBy { it.priceInPennies }!!.priceInPennies
                     val maxPrice = journey.tickets.maxBy { it.priceInPennies }!!.priceInPennies
-                    view.addTicket(
+                    tickets.add(
                         TicketInfo(
                             journey.departureTime,
                             journey.arrivalTime,
@@ -64,6 +65,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
                     )
                 }
             }
+            view.setTickets(tickets)
         }
     }
 

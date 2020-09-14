@@ -9,11 +9,19 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
+    // Requirements for Recycler view
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: CustomListAdapter
 
+    // Connection to presenter
     private var presenter: ApplicationPresenter = ApplicationPresenter()
+
+    // Spinners
     private lateinit var spinnerDep: Spinner
     private lateinit var spinnerArr: Spinner
 
@@ -23,8 +31,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         spinnerDep = findViewById(R.id.departure_station)
         spinnerArr = findViewById(R.id.arrival_station)
-
-
+        recyclerView = findViewById(R.id.ticket_recycler)
 
         presenter.onViewTaken(this)
     }
@@ -46,7 +53,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
             UpdatePresenterStationListener(true, presenter, adapter)
         spinnerArr.onItemSelectedListener =
             UpdatePresenterStationListener(false, presenter, adapter)
-
     }
 
     override fun setLabel(text: String) {
@@ -60,6 +66,12 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     override fun openUrl(url: String) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(browserIntent)
+    }
+
+    override fun setTickets(tickets: List<TicketInfo>) {
+        viewAdapter = CustomListAdapter(tickets)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = viewAdapter
     }
 
     fun buttonClick(view: View) {

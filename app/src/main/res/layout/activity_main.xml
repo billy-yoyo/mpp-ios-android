@@ -60,13 +60,23 @@
         app:layout_constraintTop_toBottomOf="@id/arrival_text"/>
 
     <Button
+        android:id="@+id/get_times"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/get_train_times"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/arrival_station"
         android:onClick="buttonClick"/>
+
+    <view class="androidx.recyclerview.widget.RecyclerView"
+        android:id="@+id/ticket_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/get_times"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </view>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
