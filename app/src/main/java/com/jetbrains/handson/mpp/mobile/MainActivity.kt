@@ -68,8 +68,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         startActivity(browserIntent)
     }
 
-    override fun setTickets(tickets: List<TicketInfo>) {
-        viewAdapter = CustomListAdapter(tickets)
+    override fun setJourneys(journeys: List<JourneyInfo>) {
+        viewAdapter = CustomListAdapter(journeys)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = viewAdapter
     }

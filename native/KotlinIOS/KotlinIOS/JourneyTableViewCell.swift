@@ -1,5 +1,5 @@
 //
-//  TicketTableViewCell.swift
+//  JourneyTableViewCell.swift
 //  KotlinIOS
 //
 //  Created by Will Page on 11/09/2020.
@@ -8,8 +8,7 @@
 
 import UIKit
 
-class TicketTableViewCell: UITableViewCell {
-
+class JourneyTableViewCell: UITableViewCell {
     
     @IBOutlet weak var departureTime: UILabel!
     @IBOutlet weak var arrivalTime: UILabel!

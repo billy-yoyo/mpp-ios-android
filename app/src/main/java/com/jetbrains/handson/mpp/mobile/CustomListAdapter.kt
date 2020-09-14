@@ -1,13 +1,12 @@
 package com.jetbrains.handson.mpp.mobile
 
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomListAdapter(private val tickets: List<TicketInfo>) : RecyclerView.Adapter<CustomListAdapter.CustomViewHolder>() {
+class CustomListAdapter(private val journeys: List<JourneyInfo>) : RecyclerView.Adapter<CustomListAdapter.CustomViewHolder>() {
     class CustomViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
         fun bindItems(departureTime: String, arrivalTime: String, maxPrice: Int, minPrice: Int) {
             val colDepTime = view.findViewById<TextView>(R.id.departure_time)
@@ -32,13 +31,13 @@ class CustomListAdapter(private val tickets: List<TicketInfo>) : RecyclerView.Ad
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.bindItems(
-            tickets.map { it.departureTime }[position],
-            tickets.map { it.arrivalTime }[position],
-            tickets.map { it.maxPrice }[position],
-            tickets.map { it.minPrice }[position])
+            journeys.map { it.departureTime }[position],
+            journeys.map { it.arrivalTime }[position],
+            journeys.map { it.maxPrice }[position],
+            journeys.map { it.minPrice }[position])
     }
 
     override fun getItemCount(): Int {
-        return tickets.size
+        return journeys.size
     }
 }
