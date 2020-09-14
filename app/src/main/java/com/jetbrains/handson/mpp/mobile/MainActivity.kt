@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     override fun setJourneys(journeys: List<JourneyInfo>) {
-        viewAdapter = CustomListAdapter(journeys)
+        viewAdapter = CustomListAdapter(journeys, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = viewAdapter
     }
