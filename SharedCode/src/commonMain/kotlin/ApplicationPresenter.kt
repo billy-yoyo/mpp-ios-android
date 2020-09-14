@@ -45,7 +45,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     }
 
     override fun onTimesRequested() {
-        val view = this.view
+        val view = view
 
         launch {
             view.setJourneys(listOf()) // clear journeys

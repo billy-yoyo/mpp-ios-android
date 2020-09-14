@@ -5,7 +5,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlin.coroutines.CoroutineContext
 
 class JourneyInfoPresenter : JourneyInfoContract.Presenter() {
-
     private val dispatchers = AppDispatchersImpl()
     private val job: Job = SupervisorJob()
     override val coroutineContext: CoroutineContext
