@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,7 +62,13 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     override fun showAlert(message: String) {
-        TODO("Not yet implemented")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.alert_title)
+        builder.setMessage(message)
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(true)
+        alertDialog.show()
     }
 
     override fun openUrl(url: String) {
