@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     override fun setTickets(tickets: List<TicketInfo>) {
-        viewAdapter = CustomListAdapter(tickets)
+        viewAdapter = CustomListAdapter(tickets, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = viewAdapter
     }
