@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CustomListAdapter(private val tickets: List<TicketInfo>, private val context: Context) : RecyclerView.Adapter<CustomListAdapter.CustomViewHolder>() {
+
+class CustomListAdapter(private val journeys: List<JourneyInfo>, private val context: Context) : RecyclerView.Adapter<CustomListAdapter.CustomViewHolder>() {
     class CustomViewHolder(private val view: View, private val context: Context): RecyclerView.ViewHolder(view) {
         fun bindItems(departureTime: String, arrivalTime: String, maxPrice: Int, minPrice: Int) {
             val colDepTime = view.findViewById<TextView>(R.id.departure_time)
@@ -37,13 +38,13 @@ class CustomListAdapter(private val tickets: List<TicketInfo>, private val conte
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.bindItems(
-            tickets.map { it.departureTime }[position],
-            tickets.map { it.arrivalTime }[position],
-            tickets.map { it.maxPrice }[position],
-            tickets.map { it.minPrice }[position])
+            journeys.map { it.departureTime }[position],
+            journeys.map { it.arrivalTime }[position],
+            journeys.map { it.maxPrice }[position],
+            journeys.map { it.minPrice }[position])
     }
 
     override fun getItemCount(): Int {
-        return tickets.size
+        return journeys.size
     }
 }

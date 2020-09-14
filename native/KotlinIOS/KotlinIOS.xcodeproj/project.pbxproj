@@ -16,7 +16,7 @@
 		47729E2622F447CA00B9B36B /* KotlinIOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E2522F447CA00B9B36B /* KotlinIOSUITests.swift */; };
 		47729E6E22F4806C00B9B36B /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47729E6D22F4806B00B9B36B /* SharedCode.framework */; };
 		47729E6F22F4806C00B9B36B /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 47729E6D22F4806B00B9B36B /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B02CC272250BA2E10037124A /* TicketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02CC271250BA2E10037124A /* TicketTableViewCell.swift */; };
+		B02CC272250BA2E10037124A /* JourneyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02CC271250BA2E10037124A /* JourneyTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +65,7 @@
 		47729E2522F447CA00B9B36B /* KotlinIOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KotlinIOSUITests.swift; sourceTree = "<group>"; };
 		47729E2722F447CA00B9B36B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47729E6D22F4806B00B9B36B /* SharedCode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedCode.framework; path = "../../SharedCode/build/xcode-frameworks/SharedCode.framework"; sourceTree = "<group>"; };
-		B02CC271250BA2E10037124A /* TicketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTableViewCell.swift; sourceTree = "<group>"; };
+		B02CC271250BA2E10037124A /* JourneyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +120,7 @@
 			children = (
 				47729E0522F447C800B9B36B /* AppDelegate.swift */,
 				47729E0722F447C800B9B36B /* ViewController.swift */,
-				B02CC271250BA2E10037124A /* TicketTableViewCell.swift */,
+				B02CC271250BA2E10037124A /* JourneyTableViewCell.swift */,
 				47729E0922F447C800B9B36B /* Main.storyboard */,
 				47729E0C22F447CA00B9B36B /* Assets.xcassets */,
 				47729E0E22F447CA00B9B36B /* LaunchScreen.storyboard */,
@@ -300,7 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B02CC272250BA2E10037124A /* TicketTableViewCell.swift in Sources */,
+				B02CC272250BA2E10037124A /* JourneyTableViewCell.swift in Sources */,
 				47729E0822F447C800B9B36B /* ViewController.swift in Sources */,
 				47729E0622F447C800B9B36B /* AppDelegate.swift in Sources */,
 			);

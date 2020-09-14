@@ -8,11 +8,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var departureStationLabel: UILabel!
     @IBOutlet weak var arrivalStationLabel: UILabel!
     @IBOutlet weak var getTimesButton: UIButton!
-    @IBOutlet weak var ticketTable: UITableView!
+    @IBOutlet weak var journeyTable: UITableView!
     
     private let presenter: ApplicationContractPresenter = ApplicationPresenter()
     private var stationData: [Station] = [];
-    private var ticketData: [TicketInfo] = [];
+    private var journeyData: [JourneyInfo] = [];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,19 +70,19 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ticketData.count
+        return journeyData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "TicketTableViewCell"
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TicketTableViewCell else {
-            fatalError("The dequeued cell is not an instance of TicketTableViewCell")
+        let cellIdentifier = "JourneyTableViewCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? JourneyTableViewCell else {
+            fatalError("The dequeued cell is not an instance of JourneyTableViewCell")
         }
-        let ticket = ticketData[indexPath.row]
+        let journey = journeyData[indexPath.row]
         
-        cell.departureTime.text = "Departs \(formatDateTime(datetime: ticket.departureTime))"
-        cell.arrivalTime.text = "Arrives \(formatDateTime(datetime: ticket.arrivalTime))"
-        cell.priceRange.text = "From £\(ticket.minPrice / 100) to £\(ticket.maxPrice / 100)"
+        cell.departureTime.text = "Departs \(formatDateTime(datetime: journey.departureTime))"
+        cell.arrivalTime.text = "Arrives \(formatDateTime(datetime: journey.arrivalTime))"
+        cell.priceRange.text = "From £\(journey.minPrice / 100) to £\(journey.maxPrice / 100)"
         
         return cell
     }
@@ -118,9 +118,9 @@ extension ViewController: ApplicationContractView {
         UIApplication.shared.open(link)
     }
     
-    func setTickets(tickets: [TicketInfo]) {
-        ticketData = tickets
+    func setJourneys(journeys: [JourneyInfo]) {
+        journeyData = journeys
         
-        ticketTable.reloadData()
+        journeyTable.reloadData()
     }
 }
