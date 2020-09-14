@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
     override fun setJourneys(journeys: List<JourneyInfo>) {
         viewAdapter = CustomListAdapter(journeys, this)
+        viewAdapter.setOnItemClickListener { it -> presenter.onViewJourney(it)}
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = viewAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
@@ -84,7 +85,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         val bundle = Bundle()
 
         bundle.putSerializable(JourneyInfoActivity.JOURNEY, JourneyInfoTransit.fromJourneyInfo(journey))
-
 
         val intent = Intent(this, JourneyInfoActivity::class.java).apply {
             putExtras(bundle)
