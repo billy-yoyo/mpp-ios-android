@@ -29,6 +29,8 @@ class ViewController: UIViewController {
     @IBAction func getTimes(_ sender: Any) {
         presenter.onTimesRequested();
     }
+    
+    
 }
 
 extension ViewController :  UIPickerViewDelegate, UIPickerViewDataSource {
@@ -87,7 +89,9 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.onViewJourney(journey: journeyData[indexPath.row])
+    }
 }
 
 extension ViewController: ApplicationContractView {
@@ -122,5 +126,9 @@ extension ViewController: ApplicationContractView {
         journeyData = journeys
         
         journeyTable.reloadData()
+    }
+    
+    func openJourneyView(journey: JourneyInfo, tickets: [TicketInfo]) {
+        present(JourneyViewController(), animated: true, completion: nil)
     }
 }

@@ -21,8 +21,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     }
 
     private val dispatchers = AppDispatchersImpl()
-    private var _view: ApplicationContract.View? = null
-    private val view: ApplicationContract.View get() = _view!!
+    private lateinit var view: ApplicationContract.View
     private val job: Job = SupervisorJob()
     private val stations: List<Station> = listOf(
         Station("Kings Cross", "KGX"),
@@ -34,12 +33,13 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
     private var departureStation: Station? = null
     private var arrivalStation: Station? = null
+    private var model: FaresModel? = null
 
     override val coroutineContext: CoroutineContext
         get() = dispatchers.main + job
 
     override fun onViewTaken(view: ApplicationContract.View) {
-        this._view = view
+        this.view = view
         view.setLabel(createApplicationScreenMessage())
         view.setStations(stations)
     }
@@ -49,14 +49,17 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
         launch {
             view.setJourneys(listOf()) // clear journeys
-            val model: FaresModel = getTrainTimeData(departureStation!!, arrivalStation!!)
+
+            model = getTrainTimeData(departureStation!!, arrivalStation!!)
             val journeys: MutableList<JourneyInfo> = mutableListOf()
-            model.outboundJourneys.forEach { journey ->
+
+            model!!.outboundJourneys.forEachIndexed { id, journey ->
                 if (journey.tickets.isNotEmpty()) {
                     val minPrice = journey.tickets.minBy { it.priceInPennies }!!.priceInPennies
                     val maxPrice = journey.tickets.maxBy { it.priceInPennies }!!.priceInPennies
                     journeys.add(
                         JourneyInfo(
+                            id,
                             journey.departureTime,
                             journey.arrivalTime,
                             minPrice,
@@ -67,6 +70,20 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
             }
             view.setJourneys(journeys)
         }
+    }
+
+    override fun onViewJourney(journey: JourneyInfo) {
+        val journeyModel = model!!.outboundJourneys[journey.id]
+
+        val tickets = journeyModel.tickets.map { ticket ->
+            TicketInfo(
+                ticket.name,
+                ticket.description,
+                ticket.priceInPennies
+            )
+        }
+
+        view.openJourneyView(journey, tickets)
     }
 
     private suspend fun getTrainTimeData(departureStation: Station, arrivalStation: Station): FaresModel {
