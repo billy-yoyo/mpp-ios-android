@@ -31,8 +31,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // TODO: replace use of magic string
-        findViewById<TextView>(R.id.main_text).text = "TrainBoard"
+        findViewById<TextView>(R.id.main_text).text = getString(R.string.app_title)
 
         spinnerDep = findViewById(R.id.departure_station)
         spinnerArr = findViewById(R.id.arrival_station)
