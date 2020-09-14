@@ -17,8 +17,4 @@ class JourneyInfoPresenter : JourneyInfoContract.Presenter() {
         // be happy
         this.view = view
     }
-
-    override fun onBack() {
-        TODO("Not yet implemented")
-    }
 }

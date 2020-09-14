@@ -8,7 +8,5 @@ interface JourneyInfoContract {
 
     abstract class Presenter: CoroutineScope {
         abstract fun onViewTaken(view: JourneyInfoContract.View)
-
-        abstract fun onBack()
     }
 }
