@@ -10,7 +10,7 @@ import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-class TrainBoardAPI {
+class TrainBoardAPI(private val errorReporter: (error: APIErrors) -> Unit) {
     private object Strings {
         const val host = "mobile-api-dev.lner.co.uk"
 
@@ -54,6 +54,10 @@ class TrainBoardAPI {
         return date.format("YYYY-MM-dd'T'HH:mm:ss.SSSXXX")
     }
 
+    private fun handleGenericError(error: Throwable) {
+        errorReporter(APIErrors.RequestError)
+    }
+
     suspend fun getFaresModel(
         departureStation: Station,
         arrivalStation: Station,
@@ -68,6 +72,11 @@ class TrainBoardAPI {
     ): FaresModel {
         val url = createBuilder()
         val fares = Strings.FaresUrl
+
+        if (departureStation.apiCode == arrivalStation.apiCode) {
+            errorReporter(APIErrors.SameStation)
+            return FaresModel(listOf())
+        }
 
         url.path(Strings.version, fares.path)
 
@@ -88,7 +97,13 @@ class TrainBoardAPI {
             url.parameters.append(fares.inboundIsArriveBy, inboundIsArriveBy.toString())
         }
 
-        return client.get(url.buildString())
+        return try {
+            client.get(url.buildString())
+        } catch (cause: Throwable) {
+            handleGenericError(cause)
+
+            FaresModel(listOf())
+        }
     }
 
     suspend fun getStationListModel(): StationListModel {
@@ -97,6 +112,12 @@ class TrainBoardAPI {
 
         url.path(Strings.version, stations.path)
 
-        return client.get(url.buildString())
+        return try {
+            client.get(url.buildString())
+        } catch (cause: Throwable) {
+            handleGenericError(cause)
+
+            StationListModel(listOf())
+        }
     }
 }

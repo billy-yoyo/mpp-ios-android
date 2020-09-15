@@ -17,8 +17,6 @@ import kotlin.coroutines.CoroutineContext
 
 class ApplicationPresenter: ApplicationContract.Presenter() {
 
-    private val api = TrainBoardAPI()
-
     private val stationRepository by StationRepository.lazyGet()
     private val journeyRepository by JourneyRepository.lazyGet()
     private val faresRepository by FaresRepository.lazyGet()
@@ -29,6 +27,10 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
     override val coroutineContext: CoroutineContext
         get() = dispatchers.main + job
+
+    private val api = TrainBoardAPI {
+        view.showAlert(it.message)
+    }
 
     override fun onViewTaken(view: ApplicationContract.View) {
         this.view = view
