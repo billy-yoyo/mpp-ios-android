@@ -36,6 +36,11 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         recyclerView = findViewById(R.id.ticket_recycler)
 
         presenter.onViewTaken(this)
+
+        viewAdapter = CustomListAdapter(listOf(), this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = viewAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
     }
 
     override fun setStations(stations: List<Station>) {
@@ -77,10 +82,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     override fun setJourneys(journeys: List<JourneyInfo>) {
-        viewAdapter = CustomListAdapter(journeys, this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = viewAdapter
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+        viewAdapter.setJourneys(journeys)
+        viewAdapter.notifyDataSetChanged()
     }
 
     fun buttonClick(view: View) {

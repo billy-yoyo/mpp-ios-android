@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CustomListAdapter(private val journeys: List<JourneyInfo>, private val context: Context) : RecyclerView.Adapter<CustomListAdapter.CustomViewHolder>() {
+class CustomListAdapter(private var journeys: List<JourneyInfo>, private val context: Context) : RecyclerView.Adapter<CustomListAdapter.CustomViewHolder>() {
     class CustomViewHolder(private val view: View, private val context: Context): RecyclerView.ViewHolder(view) {
         fun bindItems(journey: JourneyInfo) {
             val depTime = view.findViewById<TextView>(R.id.departure_time)
@@ -46,5 +46,9 @@ class CustomListAdapter(private val journeys: List<JourneyInfo>, private val con
 
     override fun getItemCount(): Int {
         return journeys.size
+    }
+
+    fun setJourneys(journeys: List<JourneyInfo>) {
+        this.journeys = journeys
     }
 }
