@@ -48,7 +48,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
             builder.path("v1", "stations")
             val stationsModel: StationListModel = client.get(builder.buildString())
             val stationsList: List<Station> =
-                stationsModel.stations.map { Station(it.name, it.crs!!, it.nlc!!) }.sortedBy { station -> station.name.toLowerCase() }
+                stationsModel.stations.map { Station(it.name, it.crs, it.nlc) }.sortedBy { station -> station.name.toLowerCase() }
             view.setStations(stationsList)
         }
     }
@@ -105,8 +105,8 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         )
 
         builder.path("v1", "fares")
-        builder.parameters.append("originStation", departureStation.nlc)
-        builder.parameters.append("destinationStation", arrivalStation.nlc)
+        builder.parameters.append("originStation", departureStation.apiCode)
+        builder.parameters.append("destinationStation", arrivalStation.apiCode)
         builder.parameters.append("noChanges", "false")
         builder.parameters.append("numberOfAdults", "2")
         builder.parameters.append("numberOfChildren", "0")
