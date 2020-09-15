@@ -8,9 +8,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var departureStationLabel: UILabel!
     @IBOutlet weak var arrivalStationLabel: UILabel!
     @IBOutlet weak var getTimesButton: UIButton!
+    @IBOutlet weak var journeyTable: UITableView!
     
     private let presenter: ApplicationContractPresenter = ApplicationPresenter()
     private var stationData: [Station] = [];
+    private var journeyData: [JourneyInfo] = [];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,8 @@ class ViewController: UIViewController {
     @IBAction func getTimes(_ sender: Any) {
         presenter.onTimesRequested();
     }
+    
+    
 }
 
 extension ViewController :  UIPickerViewDelegate, UIPickerViewDataSource {
@@ -47,6 +51,46 @@ extension ViewController :  UIPickerViewDelegate, UIPickerViewDataSource {
         }
         
         return stationData[row].name
+    }
+}
+
+extension ViewController : UITableViewDelegate, UITableViewDataSource {
+    func formatDateTime(datetime: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss.SSSXXX"
+        guard let date: Date = dateFormatter.date(from: datetime) else {
+            return datetime
+        }
+        
+        let prettyDateFormatter = DateFormatter()
+        prettyDateFormatter.dateFormat = "MMM d, h:mm a"
+        return prettyDateFormatter.string(from: date)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return journeyData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellIdentifier = "JourneyTableViewCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? JourneyTableViewCell else {
+            fatalError("The dequeued cell is not an instance of JourneyTableViewCell")
+        }
+        let journey = journeyData[indexPath.row]
+        
+        cell.departureTime.text = "Departs \(formatDateTime(datetime: journey.departureTime))"
+        cell.arrivalTime.text = "Arrives \(formatDateTime(datetime: journey.arrivalTime))"
+        cell.priceRange.text = "From £\(journey.minPrice / 100) to £\(journey.maxPrice / 100)"
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.onViewJourney(journey: journeyData[indexPath.row])
     }
 }
 
@@ -76,5 +120,15 @@ extension ViewController: ApplicationContractView {
         }
         
         UIApplication.shared.open(link)
+    }
+    
+    func setJourneys(journeys: [JourneyInfo]) {
+        journeyData = journeys
+        
+        journeyTable.reloadData()
+    }
+    
+    func openJourneyView(journey: JourneyInfo, tickets: [TicketInfo]) {
+        present(JourneyViewController(), animated: true, completion: nil)
     }
 }

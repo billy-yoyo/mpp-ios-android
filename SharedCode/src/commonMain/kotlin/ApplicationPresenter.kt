@@ -1,15 +1,27 @@
 package com.jetbrains.handson.mpp.mobile
 
+import com.jetbrains.handson.mpp.mobile.models.FaresModel
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.DateTimeSpan
+import io.ktor.client.HttpClient
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.get
 import io.ktor.http.*
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
+import kotlinx.serialization.json.Json
 import kotlin.coroutines.CoroutineContext
 
 class ApplicationPresenter: ApplicationContract.Presenter() {
 
+    private val client = HttpClient() {
+        install(JsonFeature) {
+            serializer = KotlinxSerializer(Json {ignoreUnknownKeys=true})
+        }
+    }
+
     private val dispatchers = AppDispatchersImpl()
-    private var _view: ApplicationContract.View? = null
-    private val view: ApplicationContract.View get() = _view!!
+    private lateinit var view: ApplicationContract.View
     private val job: Job = SupervisorJob()
     private val stations: List<Station> = listOf(
         Station("Kings Cross", "KGX"),
@@ -21,18 +33,59 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
     private var departureStation: Station? = null
     private var arrivalStation: Station? = null
+    private var model: FaresModel? = null
 
     override val coroutineContext: CoroutineContext
         get() = dispatchers.main + job
 
     override fun onViewTaken(view: ApplicationContract.View) {
-        this._view = view
+        this.view = view
         view.setLabel(createApplicationScreenMessage())
-        view.setStations(stations);
+        view.setStations(stations)
     }
 
     override fun onTimesRequested() {
-        val now = "2020-10-14T19:30:00.000+01:00"
+        launch {
+            view.setJourneys(listOf()) // clear journeys
+
+            model = getTrainTimeData(departureStation!!, arrivalStation!!)
+            val journeys: MutableList<JourneyInfo> = mutableListOf()
+
+            model!!.outboundJourneys.forEachIndexed { id, journey ->
+                if (journey.tickets.isNotEmpty()) {
+                    val minPrice = journey.tickets.minBy { it.priceInPennies }!!.priceInPennies
+                    val maxPrice = journey.tickets.maxBy { it.priceInPennies }!!.priceInPennies
+                    journeys.add(
+                        JourneyInfo(
+                            id,
+                            journey.departureTime,
+                            journey.arrivalTime,
+                            minPrice,
+                            maxPrice
+                        )
+                    )
+                }
+            }
+            view.setJourneys(journeys)
+        }
+    }
+
+    override fun onViewJourney(journey: JourneyInfo) {
+        val journeyModel = model!!.outboundJourneys[journey.id]
+
+        val tickets = journeyModel.tickets.map { ticket ->
+            TicketInfo(
+                ticket.name,
+                ticket.description,
+                ticket.priceInPennies
+            )
+        }.sortedBy { ticket -> ticket.price }
+
+        view.openJourneyView(journey, tickets)
+    }
+
+    private suspend fun getTrainTimeData(departureStation: Station, arrivalStation: Station): FaresModel {
+        val now = DateTime.nowLocal().plus(DateTimeSpan(minutes=1)).format("YYYY-MM-dd'T'HH:mm:ss.SSSXXX")
 
         val builder = URLBuilder(
             URLProtocol.HTTPS,
@@ -41,8 +94,8 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         )
 
         builder.path("v1", "fares")
-        builder.parameters.append("originStation", departureStation!!.id)
-        builder.parameters.append("destinationStation", arrivalStation!!.id)
+        builder.parameters.append("originStation", departureStation.id)
+        builder.parameters.append("destinationStation", arrivalStation.id)
         builder.parameters.append("noChanges", "false")
         builder.parameters.append("numberOfAdults", "2")
         builder.parameters.append("numberOfChildren", "0")
@@ -50,7 +103,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         builder.parameters.append("outboundDateTime", now)
         builder.parameters.append("outboundIsArriveBy", "false")
 
-        view.openUrl(builder.buildString());
+        return client.get(builder.buildString())
     }
 
     override fun setDepartureStation(station: Station?) {

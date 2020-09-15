@@ -8,12 +8,22 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
+    // Requirements for Recycler view
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: CustomListAdapter
 
+    // Connection to presenter
     private var presenter: ApplicationPresenter = ApplicationPresenter()
+
+    // Spinners
     private lateinit var spinnerDep: Spinner
     private lateinit var spinnerArr: Spinner
 
@@ -23,10 +33,14 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         spinnerDep = findViewById(R.id.departure_station)
         spinnerArr = findViewById(R.id.arrival_station)
-
-
+        recyclerView = findViewById(R.id.ticket_recycler)
 
         presenter.onViewTaken(this)
+
+        viewAdapter = CustomListAdapter(listOf(), this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = viewAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
     }
 
     override fun setStations(stations: List<Station>) {
@@ -46,7 +60,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
             UpdatePresenterStationListener(true, presenter, adapter)
         spinnerArr.onItemSelectedListener =
             UpdatePresenterStationListener(false, presenter, adapter)
-
     }
 
     override fun setLabel(text: String) {
@@ -54,7 +67,13 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     override fun showAlert(message: String) {
-        TODO("Not yet implemented")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.alert_title)
+        builder.setMessage(message)
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(true)
+        alertDialog.show()
     }
 
     override fun openUrl(url: String) {
@@ -62,8 +81,25 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         startActivity(browserIntent)
     }
 
+    override fun setJourneys(journeys: List<JourneyInfo>) {
+        viewAdapter.setJourneys(journeys)
+        viewAdapter.notifyDataSetChanged()
+    }
+
     fun buttonClick(view: View) {
         presenter.onTimesRequested()
+    }
+
+    override fun openJourneyView(journey: JourneyInfo, tickets: List<TicketInfo>) {
+        val bundle = Bundle()
+
+        bundle.putSerializable(JourneyInfoActivity.JOURNEY, JourneyInfoTransit.fromJourneyInfo(journey))
+
+
+        val intent = Intent(this, JourneyInfoActivity::class.java).apply {
+            putExtras(bundle)
+        }
+        startActivity(intent)
     }
 
     class UpdatePresenterStationListener(
