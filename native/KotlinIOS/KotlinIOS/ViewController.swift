@@ -125,28 +125,7 @@ extension ViewController: ApplicationContractView {
         journeyTable.reloadData()
     }
     
-    func openJourneyView(journey: JourneyInfo, tickets: [TicketInfo]) {
-        performSegue(
-            withIdentifier: "showJourneyInfo",
-            sender: JourneyViewData(
-                journey: journey,
-                tickets: tickets
-            )
-        )
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is JourneyViewController {
-            guard let journeyController = segue.destination as? JourneyViewController else { return }
-            guard let data = sender as? JourneyViewData else { return }
-            
-            journeyController.journey = data.journey
-            journeyController.tickets = data.tickets
-        }
-    }
-    
-    struct JourneyViewData {
-        var journey: JourneyInfo
-        var tickets: [TicketInfo]
+    func openJourneyView() {
+        performSegue(withIdentifier: "showJourneyInfo", sender: nil)
     }
 }

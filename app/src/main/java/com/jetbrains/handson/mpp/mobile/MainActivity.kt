@@ -92,15 +92,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         presenter.onTimesRequested()
     }
 
-    override fun openJourneyView(journey: JourneyInfo, tickets: List<TicketInfo>) {
-        val bundle = Bundle()
-
-        bundle.putSerializable(JourneyInfoActivity.JOURNEY, JourneyInfoTransit.fromJourneyInfo(journey))
-        bundle.putSerializable(JourneyInfoActivity.TICKETS, tickets.map { TicketInfoTransit.fromTicketInfo(it) } as ArrayList<TicketInfoTransit>)
-
-        val intent = Intent(this, JourneyInfoActivity::class.java).apply {
-            putExtras(bundle)
-        }
+    override fun openJourneyView() {
+        val intent = Intent(this, JourneyInfoActivity::class.java)
         startActivity(intent)
     }
 

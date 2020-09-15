@@ -12,9 +12,11 @@ import SharedCode
 class JourneyViewController: UIViewController {
     
     private var presenter: JourneyInfoContractPresenter = JourneyInfoPresenter()
+    
     var journey: JourneyInfo? = nil
     var tickets: [TicketInfo] = []
-
+    @IBOutlet weak var ticketTable: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,10 +25,15 @@ class JourneyViewController: UIViewController {
 }
 
 extension JourneyViewController : JourneyInfoContractView {
-    /*
-     Currently the view implementation is empty, however this extensions is still needed in order
-     for the compiler to recognize that JourneyViewController can be cast to JourneyInfoContractView
-     */
+    func setJourney(journey: JourneyInfo) {
+        self.journey = journey
+    }
+    
+    func setTickets(tickets: [TicketInfo]) {
+        self.tickets = tickets
+        
+        ticketTable.reloadData()
+    }
 }
 
 extension JourneyViewController : UITableViewDelegate, UITableViewDataSource {

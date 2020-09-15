@@ -1,6 +1,9 @@
 package com.jetbrains.handson.mpp.mobile
 
 import com.jetbrains.handson.mpp.mobile.models.FaresModel
+import com.jetbrains.handson.mpp.mobile.repository.FaresRepository
+import com.jetbrains.handson.mpp.mobile.repository.JourneyRepository
+import com.jetbrains.handson.mpp.mobile.repository.StationRepository
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeSpan
 import io.ktor.client.HttpClient
@@ -20,6 +23,10 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         }
     }
 
+    private val stationRepository by StationRepository.lazyGet()
+    private val journeyRepository by JourneyRepository.lazyGet()
+    private val faresRepository by FaresRepository.lazyGet()
+
     private val dispatchers = AppDispatchersImpl()
     private lateinit var view: ApplicationContract.View
     private val job: Job = SupervisorJob()
@@ -30,10 +37,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         Station("Leeds", "LDS"),
         Station("Cattal", "CTL")
     )
-
-    private var departureStation: Station? = null
-    private var arrivalStation: Station? = null
-    private var model: FaresModel? = null
 
     override val coroutineContext: CoroutineContext
         get() = dispatchers.main + job
@@ -47,10 +50,16 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         launch {
             view.setJourneys(listOf()) // clear journeys
 
-            model = getTrainTimeData(departureStation!!, arrivalStation!!)
+            val model = getTrainTimeData(
+                stationRepository.getDepartureStation()!!,
+                stationRepository.getArrivalStation()!!
+            )
+
+            faresRepository.setFares(model)
+
             val journeys: MutableList<JourneyInfo> = mutableListOf()
 
-            model!!.outboundJourneys.forEachIndexed { id, journey ->
+            model.outboundJourneys.forEachIndexed { id, journey ->
                 if (journey.tickets.isNotEmpty()) {
                     val minPrice = journey.tickets.minBy { it.priceInPennies }!!.priceInPennies
                     val maxPrice = journey.tickets.maxBy { it.priceInPennies }!!.priceInPennies
@@ -65,12 +74,13 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
                     )
                 }
             }
+
             view.setJourneys(journeys)
         }
     }
 
     override fun onViewJourney(journey: JourneyInfo) {
-        val journeyModel = model!!.outboundJourneys[journey.id]
+        val journeyModel = faresRepository.getFares()!!.outboundJourneys[journey.id]
 
         val tickets = journeyModel.tickets.map { ticket ->
             TicketInfo(
@@ -80,7 +90,10 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
             )
         }.sortedBy { ticket -> ticket.price }
 
-        view.openJourneyView(journey, tickets)
+        journeyRepository.setJourney(journey)
+        journeyRepository.setTickets(tickets)
+
+        view.openJourneyView()
     }
 
     private suspend fun getTrainTimeData(departureStation: Station, arrivalStation: Station): FaresModel {
@@ -106,10 +119,10 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     }
 
     override fun setDepartureStation(station: Station?) {
-        departureStation = station
+        stationRepository.setDepartureStation(station)
     }
 
     override fun setArrivalStation(station: Station?) {
-        arrivalStation = station
+        stationRepository.setArrivalStation(station)
     }
 }
