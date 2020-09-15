@@ -1,5 +1,10 @@
 <resources>
+    <string name="main_title">TrainBOARD</string>
+
     <string name="app_name">KotlinMPP</string>
+
+    <string name="app_title">TrainBoard</string>
+
     <string name="get_train_times">Get Train Times</string>
     <string name="departure_text">Select departure station:</string>
     <string name="arrival_text">Select destination:</string>
@@ -9,4 +14,9 @@
     <string name="departure_time">Departs: %s</string>
     <string name="arrival_time">Arrives: %s</string>
     <string name="prices">Prices: Between £%.2f and £%.2f</string>
+
+    <string name="tickets_subtitle">Tickets for the %s train on %s.</string>
+
+    <string name="ticket_type">Ticket type: %s</string>
+    <string name="ticket_price">Price: £%.2f</string>
 </resources>

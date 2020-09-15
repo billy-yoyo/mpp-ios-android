@@ -34,7 +34,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
     override fun onViewTaken(view: ApplicationContract.View) {
         this.view = view
-        view.setLabel(createApplicationScreenMessage())
         listOfStations()
     }
 
@@ -54,8 +53,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     }
 
     override fun onTimesRequested() {
-        val view = view
-
         launch {
             view.setJourneys(listOf()) // clear journeys
 
