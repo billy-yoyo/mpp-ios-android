@@ -1,6 +1,6 @@
 package com.jetbrains.handson.mpp.mobile.repository.impl
 
-import com.jetbrains.handson.mpp.mobile.Station
+import com.jetbrains.handson.mpp.mobile.dataclasses.Station
 import com.jetbrains.handson.mpp.mobile.repository.StationRepository
 
 class StationRepositoryImpl : StationRepository {

@@ -6,22 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.jetbrains.handson.mpp.mobile.dataclasses.Journey
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class CustomListAdapter(
-    private val journeys: List<JourneyInfo>,
+    private val journeys: List<Journey>,
     private val context: Context
 ) : RecyclerView.Adapter<CustomListAdapter.CustomViewHolder>() {
-    private var listener: ((item: JourneyInfo) -> Unit)? = null
+    private var listener: ((item: Journey) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (item: JourneyInfo) -> Unit) {
+    fun setOnItemClickListener(listener: (item: Journey) -> Unit) {
         this.listener = listener
     }
 
     class CustomViewHolder(private val view: View, private val context: Context): RecyclerView.ViewHolder(view) {
-        fun bindItems(journey: JourneyInfo) {
+        fun bindItems(journey: Journey) {
             val depTime = view.findViewById<TextView>(R.id.departure_time)
             depTime.text = context.resources.getString(R.string.departure_time, formatDateTime(journey.departureTime))
 

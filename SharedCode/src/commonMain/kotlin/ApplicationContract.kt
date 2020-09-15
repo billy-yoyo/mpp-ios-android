@@ -1,5 +1,7 @@
 package com.jetbrains.handson.mpp.mobile
 
+import com.jetbrains.handson.mpp.mobile.dataclasses.Journey
+import com.jetbrains.handson.mpp.mobile.dataclasses.Station
 import kotlinx.coroutines.CoroutineScope
 
 interface ApplicationContract {
@@ -10,7 +12,7 @@ interface ApplicationContract {
 
         fun openUrl(url: String)
 
-        fun setJourneys(journeys: List<JourneyInfo>)
+        fun setJourneys(journeys: List<Journey>)
 
         fun openJourneyView()
     }
@@ -20,7 +22,7 @@ interface ApplicationContract {
 
         abstract fun onTimesRequested()
 
-        abstract fun onViewJourney(journey: JourneyInfo)
+        abstract fun onViewJourney(journey: Journey)
 
         abstract fun setDepartureStation(station: Station?)
 

@@ -1,6 +1,6 @@
 package com.jetbrains.handson.mpp.mobile.repository
 
-import com.jetbrains.handson.mpp.mobile.Station
+import com.jetbrains.handson.mpp.mobile.dataclasses.Station
 import kotlin.native.concurrent.ThreadLocal
 
 interface StationRepository {
