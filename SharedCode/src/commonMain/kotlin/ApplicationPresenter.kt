@@ -45,8 +45,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     }
 
     override fun onTimesRequested() {
-        val view = this.view
-
         launch {
             view.setJourneys(listOf()) // clear journeys
 
@@ -81,7 +79,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
                 ticket.description,
                 ticket.priceInPennies
             )
-        }
+        }.sortedBy { ticket -> ticket.price }
 
         view.openJourneyView(journey, tickets)
     }
