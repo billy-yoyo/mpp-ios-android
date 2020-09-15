@@ -1,9 +1,9 @@
-package com.jetbrains.handson.mpp.mobile
+package com.jetbrains.handson.mpp.mobile.dataclasses
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class JourneyInfo(
+data class Journey(
     val id: Int,
     val departureTime: String,
     val arrivalTime: String,

@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.jetbrains.handson.mpp.mobile.dataclasses.Ticket
 
 class CustomJourneyAdapter(
-    private val tickets: List<TicketInfo>,
+    private val tickets: List<Ticket>,
     private val context: Context
 ) : RecyclerView.Adapter<CustomJourneyAdapter.CustomViewHolder>() {
     class CustomViewHolder(private val view: View, private val context: Context): RecyclerView.ViewHolder(view) {
-        fun bindItems(ticket: TicketInfo) {
+        fun bindItems(ticket: Ticket) {
             val ticketType = view.findViewById<TextView>(R.id.ticket_type)
             ticketType.text = context.resources.getString(R.string.ticket_type, ticket.name)
 

@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jetbrains.handson.mpp.mobile.dataclasses.Journey
+import com.jetbrains.handson.mpp.mobile.dataclasses.Ticket
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,7 +41,7 @@ class JourneyInfoActivity : AppCompatActivity(), JourneyInfoContract.View  {
         return outputFormatter.format(date)
     }
 
-    override fun setJourney(journey: JourneyInfo) {
+    override fun setJourney(journey: Journey) {
         subtitle = findViewById(R.id.subheading)
         subtitle.text = this.resources.getString(
             R.string.tickets_subtitle,
@@ -48,7 +50,7 @@ class JourneyInfoActivity : AppCompatActivity(), JourneyInfoContract.View  {
         )
     }
 
-    override fun setTickets(tickets: List<TicketInfo>) {
+    override fun setTickets(tickets: List<Ticket>) {
         recyclerView = findViewById(R.id.tickets_recycler)
         viewAdapter = CustomJourneyAdapter(tickets, this)
         recyclerView.layoutManager = LinearLayoutManager(this)

@@ -1,5 +1,8 @@
 package com.jetbrains.handson.mpp.mobile
 
+import com.jetbrains.handson.mpp.mobile.dataclasses.Journey
+import com.jetbrains.handson.mpp.mobile.dataclasses.Station
+import com.jetbrains.handson.mpp.mobile.dataclasses.Ticket
 import com.jetbrains.handson.mpp.mobile.http.TrainBoardAPI
 import com.jetbrains.handson.mpp.mobile.models.FaresModel
 import com.jetbrains.handson.mpp.mobile.repository.FaresRepository
@@ -55,14 +58,14 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
             faresRepository.setFares(model)
 
-            val journeys: MutableList<JourneyInfo> = mutableListOf()
+            val journeys: MutableList<Journey> = mutableListOf()
 
             model.outboundJourneys.forEachIndexed { id, journey ->
                 if (journey.tickets.isNotEmpty()) {
                     val minPrice = journey.tickets.minBy { it.priceInPennies }!!.priceInPennies
                     val maxPrice = journey.tickets.maxBy { it.priceInPennies }!!.priceInPennies
                     journeys.add(
-                        JourneyInfo(
+                        Journey(
                             id,
                             journey.departureTime,
                             journey.arrivalTime,
@@ -77,11 +80,11 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         }
     }
 
-    override fun onViewJourney(journey: JourneyInfo) {
+    override fun onViewJourney(journey: Journey) {
         val journeyModel = faresRepository.getFares()!!.outboundJourneys[journey.id]
 
         val tickets = journeyModel.tickets.map { ticket ->
-            TicketInfo(
+            Ticket(
                 ticket.name,
                 ticket.description,
                 ticket.priceInPennies
