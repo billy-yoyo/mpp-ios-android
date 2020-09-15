@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.io.Serializable
 
 
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         spinnerDep = findViewById(R.id.departure_station)
         spinnerArr = findViewById(R.id.arrival_station)
-        recyclerView = findViewById(R.id.ticket_recycler)
+        recyclerView = findViewById(R.id.journey_recycler)
 
         presenter.onViewTaken(this)
 
@@ -82,8 +83,11 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     override fun setJourneys(journeys: List<JourneyInfo>) {
-        viewAdapter.setJourneys(journeys)
-        viewAdapter.notifyDataSetChanged()
+        viewAdapter = CustomListAdapter(journeys, this)
+        viewAdapter.setOnItemClickListener { it -> presenter.onViewJourney(it)}
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = viewAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
     }
 
     fun buttonClick(view: View) {
@@ -94,7 +98,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         val bundle = Bundle()
 
         bundle.putSerializable(JourneyInfoActivity.JOURNEY, JourneyInfoTransit.fromJourneyInfo(journey))
-
+        bundle.putSerializable(JourneyInfoActivity.TICKETS, tickets.map { TicketInfoTransit.fromTicketInfo(it) } as ArrayList<TicketInfoTransit>)
 
         val intent = Intent(this, JourneyInfoActivity::class.java).apply {
             putExtras(bundle)
