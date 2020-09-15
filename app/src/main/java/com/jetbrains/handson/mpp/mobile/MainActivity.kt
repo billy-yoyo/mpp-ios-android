@@ -4,10 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -25,16 +22,18 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     // Connection to presenter
     private var presenter: ApplicationPresenter = ApplicationPresenter()
 
-    // Spinners
-    private lateinit var spinnerDep: Spinner
-    private lateinit var spinnerArr: Spinner
+    // Autocomplete text
+    private lateinit var autotextDep: AutoCompleteTextView
+    private lateinit var autotextArr: AutoCompleteTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        spinnerDep = findViewById(R.id.departure_station)
-        spinnerArr = findViewById(R.id.arrival_station)
+        findViewById<TextView>(R.id.main_text).text = getString(R.string.app_title)
+
+        autotextDep = findViewById(R.id.departure_station)
+        autotextArr = findViewById(R.id.arrival_station)
         recyclerView = findViewById(R.id.journey_recycler)
 
         presenter.onViewTaken(this)
@@ -46,21 +45,19 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     override fun setStations(stations: List<Station>) {
-        // Create an ArrayAdapter using the string array and the custom text formatting
         val adapter: ArrayAdapter<Station> = ArrayAdapter<Station>(
             applicationContext,
-            R.layout.spinner_item,
+            R.layout.autocomplete_item,
             stations
         )
 
-        // Set the drop down view to use a default spinner item on top of the custom text format
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerDep.adapter = adapter
-        spinnerArr.adapter = adapter
+        adapter.setDropDownViewResource(R.layout.autocomplete_item)
+        autotextDep.setAdapter(adapter)
+        autotextArr.setAdapter(adapter)
 
-        spinnerDep.onItemSelectedListener =
+        autotextDep.onItemClickListener =
             UpdatePresenterStationListener(true, presenter, adapter)
-        spinnerArr.onItemSelectedListener =
+        autotextArr.onItemClickListener =
             UpdatePresenterStationListener(false, presenter, adapter)
     }
 
@@ -100,20 +97,12 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         private val isDeparture: Boolean,
         private val presenter: ApplicationPresenter,
         private val adapter: ArrayAdapter<Station>
-    ) : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>, item: View?, position: Int, id: Long) {
+    ) : AdapterView.OnItemClickListener {
+        override fun onItemClick(parent: AdapterView<*>?, item: View?, position: Int, id: Long) {
             if (isDeparture) {
                 presenter.setDepartureStation(adapter.getItem(position))
             } else {
                 presenter.setArrivalStation(adapter.getItem(position))
-            }
-        }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-            if (isDeparture) {
-                presenter.setDepartureStation(null)
-            } else {
-                presenter.setArrivalStation(null);
             }
         }
     }
