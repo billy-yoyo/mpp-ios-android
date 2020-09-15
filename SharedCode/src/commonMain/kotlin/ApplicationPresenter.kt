@@ -1,7 +1,6 @@
 package com.jetbrains.handson.mpp.mobile
 
 import com.jetbrains.handson.mpp.mobile.models.FaresModel
-import com.jetbrains.handson.mpp.mobile.models.StationInfoModel
 import com.jetbrains.handson.mpp.mobile.models.StationListModel
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeSpan
