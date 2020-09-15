@@ -103,6 +103,8 @@ extension ViewController: ApplicationContractView {
             presenter.setDepartureStation(station: stations[0])
             presenter.setArrivalStation(station: stations[0])
         }
+        
+        self.stations.reloadAllComponents()
     }
     
     func showAlert(message: String) {
