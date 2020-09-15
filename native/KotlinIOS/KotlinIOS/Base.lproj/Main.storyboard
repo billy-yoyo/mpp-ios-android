@@ -202,6 +202,9 @@
                         <viewLayoutGuide key="safeArea" id="x3L-ra-gqy"/>
                     </view>
                     <navigationItem key="navigationItem" id="UBR-EW-xaU"/>
+                    <connections>
+                        <outlet property="ticketTable" destination="Oc4-u9-hlb" id="hy2-cQ-6uL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hXx-22-zV1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

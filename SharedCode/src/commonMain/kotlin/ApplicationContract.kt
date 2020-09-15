@@ -12,7 +12,7 @@ interface ApplicationContract {
 
         fun setJourneys(journeys: List<JourneyInfo>)
 
-        fun openJourneyView(journey: JourneyInfo, tickets: List<TicketInfo>)
+        fun openJourneyView()
     }
 
     abstract class Presenter: CoroutineScope {

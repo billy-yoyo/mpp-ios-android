@@ -1,10 +1,14 @@
 package com.jetbrains.handson.mpp.mobile
 
+import com.jetbrains.handson.mpp.mobile.repository.JourneyRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlin.coroutines.CoroutineContext
 
 class JourneyInfoPresenter : JourneyInfoContract.Presenter() {
+
+    private val journeyRepository by JourneyRepository.lazyGet()
+
     private val dispatchers = AppDispatchersImpl()
     private val job: Job = SupervisorJob()
     override val coroutineContext: CoroutineContext
@@ -15,5 +19,8 @@ class JourneyInfoPresenter : JourneyInfoContract.Presenter() {
     override fun onViewTaken(view: JourneyInfoContract.View) {
         // be happy
         this.view = view
+
+        view.setJourney(journeyRepository.getJourney()!!)
+        view.setTickets(journeyRepository.getTickets())
     }
 }

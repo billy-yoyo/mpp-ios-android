@@ -10,40 +10,19 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class JourneyInfoActivity : AppCompatActivity(), JourneyInfoContract.View  {
-    companion object {
-        val JOURNEY: String = "JOURNEY"
-        val TICKETS: String = "TICKETS"
-    }
-
     // Requirements for Recycler view
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: CustomJourneyAdapter
 
     // Requirements for updating subtitle
     private lateinit var subtitle: TextView
+    private var presenter: JourneyInfoPresenter = JourneyInfoPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val journey =
-            (this.intent.extras?.getSerializable(JOURNEY) as JourneyInfoTransit).toJourneyInfo()
-
-        val tickets = (this.intent.extras?.getSerializable(TICKETS) as ArrayList<*>).map { (it as TicketInfoTransit).toTicketInfo() }
-
         setContentView(R.layout.activity_journey)
 
-        subtitle = findViewById(R.id.subheading)
-        subtitle.text = this.resources.getString(
-            R.string.tickets_subtitle,
-            formatTime(journey.departureTime),
-            formatDate(journey.departureTime)
-        )
-
-        recyclerView = findViewById(R.id.tickets_recycler)
-        viewAdapter = CustomJourneyAdapter(tickets, this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = viewAdapter
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+        presenter.onViewTaken(this)
     }
 
     private fun formatTime(datetime: String): String {
@@ -58,5 +37,22 @@ class JourneyInfoActivity : AppCompatActivity(), JourneyInfoContract.View  {
         val outputFormatter = SimpleDateFormat("MMM d" , Locale.UK)
         val date = inputFormatter.parse(datetime) ?: return datetime
         return outputFormatter.format(date)
+    }
+
+    override fun setJourney(journey: JourneyInfo) {
+        subtitle = findViewById(R.id.subheading)
+        subtitle.text = this.resources.getString(
+            R.string.tickets_subtitle,
+            formatTime(journey.departureTime),
+            formatDate(journey.departureTime)
+        )
+    }
+
+    override fun setTickets(tickets: List<TicketInfo>) {
+        recyclerView = findViewById(R.id.tickets_recycler)
+        viewAdapter = CustomJourneyAdapter(tickets, this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = viewAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
     }
 }
