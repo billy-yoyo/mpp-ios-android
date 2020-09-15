@@ -12,15 +12,19 @@ import java.util.*
 
 class CustomListAdapter(private val journeys: List<JourneyInfo>, private val context: Context) : RecyclerView.Adapter<CustomListAdapter.CustomViewHolder>() {
     class CustomViewHolder(private val view: View, private val context: Context): RecyclerView.ViewHolder(view) {
-        fun bindItems(departureTime: String, arrivalTime: String, maxPrice: Int, minPrice: Int) {
-            val colDepTime = view.findViewById<TextView>(R.id.departure_time)
-            colDepTime.text = context.resources.getString(R.string.departure_time, formatDateTime(departureTime))
+        fun bindItems(journey: JourneyInfo) {
+            val depTime = view.findViewById<TextView>(R.id.departure_time)
+            depTime.text = context.resources.getString(R.string.departure_time, formatDateTime(journey.departureTime))
 
-            val colArrTime = view.findViewById<TextView>(R.id.arrival_time)
-            colArrTime.text = context.resources.getString(R.string.arrival_time, formatDateTime(arrivalTime))
+            val arrTime = view.findViewById<TextView>(R.id.arrival_time)
+            arrTime.text = context.resources.getString(R.string.arrival_time, formatDateTime(journey.arrivalTime))
 
-            val colPrices = view.findViewById<TextView>(R.id.prices)
-            colPrices.text = context.resources.getString(R.string.prices, minPrice / 100.0, maxPrice / 100.0)
+            val prices = view.findViewById<TextView>(R.id.prices)
+            prices.text = context.resources.getString(
+                R.string.prices,
+                journey.minPrice / 100.0,
+                journey.maxPrice / 100.0
+            )
         }
 
         private fun formatDateTime(datetime: String): String {
@@ -37,11 +41,7 @@ class CustomListAdapter(private val journeys: List<JourneyInfo>, private val con
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.bindItems(
-            journeys.map { it.departureTime }[position],
-            journeys.map { it.arrivalTime }[position],
-            journeys.map { it.maxPrice }[position],
-            journeys.map { it.minPrice }[position])
+        holder.bindItems(journeys[position])
     }
 
     override fun getItemCount(): Int {
