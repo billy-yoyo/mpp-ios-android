@@ -2,6 +2,9 @@
     <string name="main_title">TrainBOARD</string>
 
     <string name="app_name">KotlinMPP</string>
+
+    <string name="app_title">TrainBoard</string>
+
     <string name="get_train_times">Get Train Times</string>
     <string name="departure_text">Select departure station:</string>
     <string name="arrival_text">Select destination:</string>
