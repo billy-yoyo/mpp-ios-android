@@ -1,6 +1,8 @@
 package com.jetbrains.handson.mpp.mobile
 
 import com.jetbrains.handson.mpp.mobile.models.FaresModel
+import com.jetbrains.handson.mpp.mobile.models.StationInfoModel
+import com.jetbrains.handson.mpp.mobile.models.StationListModel
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeSpan
 import io.ktor.client.HttpClient
@@ -23,13 +25,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     private val dispatchers = AppDispatchersImpl()
     private lateinit var view: ApplicationContract.View
     private val job: Job = SupervisorJob()
-    private val stations: List<Station> = listOf(
-        Station("Kings Cross", "KGX"),
-        Station("York", "YRK"),
-        Station("Edinburgh Waverley", "EDB"),
-        Station("Leeds", "LDS"),
-        Station("Cattal", "CTL")
-    )
 
     private var departureStation: Station? = null
     private var arrivalStation: Station? = null
@@ -41,7 +36,22 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     override fun onViewTaken(view: ApplicationContract.View) {
         this.view = view
         view.setLabel(createApplicationScreenMessage())
-        view.setStations(stations)
+        listOfStations()
+    }
+
+    private fun listOfStations() {
+        launch {
+            val builder = URLBuilder(
+                URLProtocol.HTTPS,
+                "mobile-api-dev.lner.co.uk",
+                DEFAULT_PORT
+            )
+            builder.path("v1", "stations")
+            val stationsModel: StationListModel = client.get(builder.buildString())
+            val stationsList: List<Station> =
+                stationsModel.stations.map { Station(it.name, it.crs!!, it.nlc!!) }.sortedBy { station -> station.name.toLowerCase() }
+            view.setStations(stationsList)
+        }
     }
 
     override fun onTimesRequested() {
@@ -96,8 +106,8 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         )
 
         builder.path("v1", "fares")
-        builder.parameters.append("originStation", departureStation.id)
-        builder.parameters.append("destinationStation", arrivalStation.id)
+        builder.parameters.append("originStation", departureStation.nlc)
+        builder.parameters.append("destinationStation", arrivalStation.nlc)
         builder.parameters.append("noChanges", "false")
         builder.parameters.append("numberOfAdults", "2")
         builder.parameters.append("numberOfChildren", "0")
