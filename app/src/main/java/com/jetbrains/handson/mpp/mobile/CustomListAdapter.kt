@@ -59,8 +59,4 @@ class CustomListAdapter(
     override fun getItemCount(): Int {
         return journeys.size
     }
-
-    fun setJourneys(journeys: List<JourneyInfo>) {
-        this.journeys = journeys
-    }
 }
