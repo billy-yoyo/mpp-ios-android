@@ -10,7 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.io.Serializable
+import com.jetbrains.handson.mpp.mobile.dataclasses.Journey
+import com.jetbrains.handson.mpp.mobile.dataclasses.Station
 
 
 class MainActivity : AppCompatActivity(), ApplicationContract.View {
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         autotextDep = findViewById(R.id.departure_station)
         autotextArr = findViewById(R.id.arrival_station)
-
         recyclerView = findViewById(R.id.journey_recycler)
 
         presenter.onViewTaken(this)
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         startActivity(browserIntent)
     }
 
-    override fun setJourneys(journeys: List<JourneyInfo>) {
+    override fun setJourneys(journeys: List<Journey>) {
         viewAdapter = CustomListAdapter(journeys, this)
         viewAdapter.setOnItemClickListener { it -> presenter.onViewJourney(it)}
         recyclerView.layoutManager = LinearLayoutManager(this)

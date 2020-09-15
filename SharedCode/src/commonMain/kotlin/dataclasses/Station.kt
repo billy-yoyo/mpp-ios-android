@@ -1,4 +1,4 @@
-package com.jetbrains.handson.mpp.mobile
+package com.jetbrains.handson.mpp.mobile.dataclasses
 
 data class Station(
     val name: String,

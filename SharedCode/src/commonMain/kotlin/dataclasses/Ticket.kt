@@ -1,6 +1,6 @@
-package com.jetbrains.handson.mpp.mobile
+package com.jetbrains.handson.mpp.mobile.dataclasses
 
-data class TicketInfo(
+data class Ticket(
     val name: String,
     val description: String,
     val price: Int
