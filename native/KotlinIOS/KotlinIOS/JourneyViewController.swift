@@ -13,8 +13,8 @@ class JourneyViewController: UIViewController {
     
     private var presenter: JourneyInfoContractPresenter = JourneyInfoPresenter()
     
-    var journey: JourneyInfo? = nil
-    var tickets: [TicketInfo] = []
+    var journey: Journey? = nil
+    var tickets: [Ticket] = []
     @IBOutlet weak var ticketTable: UITableView!
     
     override func viewDidLoad() {
@@ -25,11 +25,11 @@ class JourneyViewController: UIViewController {
 }
 
 extension JourneyViewController : JourneyInfoContractView {
-    func setJourney(journey: JourneyInfo) {
+    func setJourney(journey: Journey) {
         self.journey = journey
     }
     
-    func setTickets(tickets: [TicketInfo]) {
+    func setTickets(tickets: [Ticket]) {
         self.tickets = tickets
         
         ticketTable.reloadData()

@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     private let presenter: ApplicationContractPresenter = ApplicationPresenter()
     private var stationData: [Station] = [];
-    private var journeyData: [JourneyInfo] = [];
+    private var journeyData: [Journey] = [];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,7 +121,7 @@ extension ViewController: ApplicationContractView {
         UIApplication.shared.open(link)
     }
     
-    func setJourneys(journeys: [JourneyInfo]) {
+    func setJourneys(journeys: [Journey]) {
         journeyData = journeys
         
         journeyTable.reloadData()

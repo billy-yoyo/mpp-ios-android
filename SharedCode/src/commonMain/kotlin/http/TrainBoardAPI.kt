@@ -1,9 +1,8 @@
 package com.jetbrains.handson.mpp.mobile.http
 
-import com.jetbrains.handson.mpp.mobile.Station
+import com.jetbrains.handson.mpp.mobile.dataclasses.Station
 import com.jetbrains.handson.mpp.mobile.models.FaresModel
 import com.jetbrains.handson.mpp.mobile.models.StationListModel
-import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeTz
 import io.ktor.client.*
 import io.ktor.client.features.json.*
