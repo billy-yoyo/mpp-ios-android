@@ -53,9 +53,8 @@ extension JourneyViewController : UITableViewDelegate, UITableViewDataSource {
         let ticket = tickets[indexPath.row]
         
         cell.ticketName.text = ticket.name
-        cell.ticketPrice.text = "£\(Float(ticket.price) / 100.0)"
+        cell.ticketPrice.text = String(format: "£%.2f", Float(ticket.price) / 100)
         
         return cell
     }
 }
-
