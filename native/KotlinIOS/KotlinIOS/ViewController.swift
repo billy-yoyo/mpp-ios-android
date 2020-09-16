@@ -27,6 +27,15 @@ class ViewController: UIViewController {
     }
 
     @IBAction func getTimes(_ sender: Any) {
+        if departureStation.text == "" {
+            showAlert(message: "Please enter a departure station")
+            return
+        }
+        if arrivalStation.text == "" {
+            showAlert(message: "Please enter an arrival station")
+            return
+        }
+        
         journeyData = []
         journeyTable.reloadData()
         loadingIndicator.startAnimating()
