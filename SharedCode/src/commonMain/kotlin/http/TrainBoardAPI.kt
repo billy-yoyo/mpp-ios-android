@@ -9,7 +9,6 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.coroutines.delay
 
 class TrainBoardAPI(private val errorReporter: (error: APIErrors) -> Unit) {
     private object Strings {
@@ -117,6 +116,7 @@ class TrainBoardAPI(private val errorReporter: (error: APIErrors) -> Unit) {
             client.get(url.buildString())
         } catch (cause: Throwable) {
             handleGenericError(cause)
+
             StationListModel(listOf())
         }
     }
