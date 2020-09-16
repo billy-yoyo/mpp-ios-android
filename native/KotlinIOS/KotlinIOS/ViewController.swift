@@ -85,7 +85,7 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         
         cell.departureTime.text = "Departs \(formatDateTime(datetime: journey.departureTime))"
         cell.arrivalTime.text = "Arrives \(formatDateTime(datetime: journey.arrivalTime))"
-        cell.priceRange.text = String(format: "From £%.2f to £%.2f", (Float(journey.minPrice) / 100), (Float(journey.maxPrice) / 100))
+        cell.priceRange.text = String(format: "From £%.2f to £%.2f", Float(journey.minPrice) / 100, Float(journey.maxPrice) / 100)
         
         return cell
     }
