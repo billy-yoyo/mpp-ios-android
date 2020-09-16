@@ -23,8 +23,6 @@ class ViewController: UIViewController {
         departureStationLabel.text = "Departure"
         arrivalStationLabel.text = "Arrival"
         label.text = "TrainBoard"
-        
-        print(stationData.count)
     }
 
     @IBAction func getTimes(_ sender: Any) {
@@ -76,11 +74,11 @@ extension ViewController: ApplicationContractView {
     func setStations(stations: [Station]) {
         stationData = stations;
             
-        departureStation.optionArray = stationData.map{$0.name}
+        departureStation.optionArray = stationData.map{$0.description()}
         departureStation.didSelect{ (selectedText, index, id) in
             self.presenter.setDepartureStation(station: self.stationData[index])
         }
-        arrivalStation.optionArray = stationData.map{$0.name}
+        arrivalStation.optionArray = stationData.map{$0.description()}
         arrivalStation.didSelect{ (selectedText, index, id) in
             self.presenter.setArrivalStation(station: self.stationData[index])
         }
