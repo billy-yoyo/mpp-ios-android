@@ -3,6 +3,7 @@ package com.jetbrains.handson.mpp.mobile
 import com.jetbrains.handson.mpp.mobile.dataclasses.Journey
 import com.jetbrains.handson.mpp.mobile.dataclasses.Station
 import com.jetbrains.handson.mpp.mobile.dataclasses.Ticket
+import com.jetbrains.handson.mpp.mobile.http.RequestLock
 import com.jetbrains.handson.mpp.mobile.http.TrainBoardAPI
 import com.jetbrains.handson.mpp.mobile.models.FaresModel
 import com.jetbrains.handson.mpp.mobile.repository.FaresRepository
@@ -31,6 +32,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     private val api = TrainBoardAPI {
         view.showAlert(it.message)
     }
+    private val faresLock = RequestLock()
 
     override fun onViewTaken(view: ApplicationContract.View) {
         this.view = view
@@ -50,11 +52,13 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
     override fun onTimesRequested() {
         launch {
-            val model = api.getFaresModel(
-                departureStation = stationRepository.getDepartureStation()!!,
-                arrivalStation =  stationRepository.getArrivalStation()!!,
-                outboundDateTime = DateTime.nowLocal().plus(DateTimeSpan(minutes=1))
-            )
+            val model = faresLock.attempt {
+                api.getFaresModel(
+                    departureStation = stationRepository.getDepartureStation()!!,
+                    arrivalStation =  stationRepository.getArrivalStation()!!,
+                    outboundDateTime = DateTime.nowLocal().plus(DateTimeSpan(minutes=1))
+                )
+            } ?: return@launch
 
             faresRepository.setFares(model)
 
