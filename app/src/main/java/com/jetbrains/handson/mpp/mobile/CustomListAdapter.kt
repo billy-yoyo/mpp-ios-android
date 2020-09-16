@@ -30,11 +30,19 @@ class CustomListAdapter(
             arrTime.text = context.resources.getString(R.string.arrival_time, formatDateTime(journey.arrivalTime))
 
             val prices = view.findViewById<TextView>(R.id.prices)
-            prices.text = context.resources.getString(
-                R.string.prices,
-                journey.minPrice / 100.0,
-                journey.maxPrice / 100.0
-            )
+
+            if (journey.minPrice == journey.maxPrice) {
+                prices.text = context.resources.getString(
+                    R.string.single_price,
+                    journey.minPrice / 100.0
+                )
+            } else {
+                prices.text = context.resources.getString(
+                    R.string.prices,
+                    journey.minPrice / 100.0,
+                    journey.maxPrice / 100.0
+                )
+            }
         }
 
         private fun formatDateTime(datetime: String): String {
