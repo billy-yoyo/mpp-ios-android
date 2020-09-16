@@ -10,6 +10,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var arrivalStationLabel: UILabel!
     @IBOutlet weak var getTimesButton: UIButton!
     @IBOutlet weak var journeyTable: UITableView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     private let presenter: ApplicationContractPresenter = ApplicationPresenter()
     private var stationData: [Station] = [];
@@ -26,6 +27,10 @@ class ViewController: UIViewController {
     }
 
     @IBAction func getTimes(_ sender: Any) {
+        journeyData = []
+        journeyTable.reloadData()
+        loadingIndicator.startAnimating()
+        
         presenter.onTimesRequested()
     }
 }
@@ -101,6 +106,7 @@ extension ViewController: ApplicationContractView {
     func setJourneys(journeys: [Journey]) {
         journeyData = journeys
         
+        loadingIndicator.stopAnimating()
         journeyTable.reloadData()
     }
     
