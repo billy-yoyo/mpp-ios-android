@@ -92,11 +92,11 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     fun buttonClick(view: View) {
-        if (autotextDep.getText().toString().equals("")) {
+        if (autotextDep.text.toString() == "") {
             showAlert("Please enter a departure station")
             return
         }
-        if (autotextArr.getText().toString().equals("")) {
+        if (autotextArr.text.toString() == "") {
             showAlert("Please enter an arrival station")
             return
         }
