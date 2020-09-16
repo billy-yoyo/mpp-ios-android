@@ -92,6 +92,15 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     fun buttonClick(view: View) {
+        if (autotextDep.getText().toString().equals("")) {
+            showAlert("Please enter a departure station")
+            return
+        }
+        if (autotextArr.getText().toString().equals("")) {
+            showAlert("Please enter an arrival station")
+            return
+        }
+
         progressBar.visibility = View.VISIBLE
         recyclerView.visibility = View.GONE
 
