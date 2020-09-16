@@ -106,6 +106,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tsi-uZ-Zaf">
+                                <rect key="frame" x="197" y="462.5" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -117,6 +120,7 @@
                             <constraint firstItem="Kxh-0k-Hfy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="Bo3-8r-Xxz"/>
                             <constraint firstItem="Kxh-0k-Hfy" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="DQs-ci-hdy"/>
                             <constraint firstItem="OG9-bf-afC" firstAttribute="height" secondItem="3pu-3e-dis" secondAttribute="height" id="Exd-VN-X0x"/>
+                            <constraint firstItem="tsi-uZ-Zaf" firstAttribute="top" secondItem="ZB2-rx-T86" secondAttribute="bottom" constant="100" id="GMb-cT-zPl"/>
                             <constraint firstItem="lhq-gA-h9O" firstAttribute="top" secondItem="ZB2-rx-T86" secondAttribute="bottom" constant="32" id="Iym-YT-NxD"/>
                             <constraint firstItem="Wf0-n0-cSy" firstAttribute="top" secondItem="OG9-bf-afC" secondAttribute="bottom" constant="16" id="LaZ-kP-AcU"/>
                             <constraint firstAttribute="trailing" secondItem="Wf0-n0-cSy" secondAttribute="trailing" constant="32" id="OhM-8D-Cy7"/>
@@ -128,6 +132,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3pu-3e-dis" secondAttribute="trailing" constant="32" id="Tf6-qS-JAe"/>
                             <constraint firstItem="3pu-3e-dis" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="UtY-vG-Pyf"/>
                             <constraint firstItem="ZB2-rx-T86" firstAttribute="top" secondItem="Wf0-n0-cSy" secondAttribute="bottom" constant="16" id="V5q-Lg-Izj"/>
+                            <constraint firstItem="tsi-uZ-Zaf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YeY-el-p6E"/>
                             <constraint firstItem="OG9-bf-afC" firstAttribute="top" secondItem="eT8-7o-9Kr" secondAttribute="bottom" constant="16" id="ZDx-dk-LbU"/>
                             <constraint firstItem="eT8-7o-9Kr" firstAttribute="top" secondItem="3pu-3e-dis" secondAttribute="bottom" constant="16" id="ZS6-Ls-YOf"/>
                             <constraint firstItem="lhq-gA-h9O" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="32" id="iZj-uC-Lwg"/>
@@ -147,6 +152,7 @@
                         <outlet property="getTimesButton" destination="ZB2-rx-T86" id="2Sy-Me-3dX"/>
                         <outlet property="journeyTable" destination="lhq-gA-h9O" id="zpK-AH-0ru"/>
                         <outlet property="label" destination="Kxh-0k-Hfy" id="6iZ-Mo-9M8"/>
+                        <outlet property="loadingIndicator" destination="tsi-uZ-Zaf" id="4dv-SA-nue"/>
                         <segue destination="hPi-6b-3iE" kind="show" identifier="showJourneyInfo" id="x7c-QZ-1RV"/>
                     </connections>
                 </viewController>
