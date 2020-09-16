@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     // Requirements for Recycler view
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: CustomListAdapter
+    private lateinit var progressBar: ProgressBar
 
     // Connection to presenter
     private var presenter: ApplicationPresenter = ApplicationPresenter()
@@ -35,6 +36,9 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         autotextDep = findViewById(R.id.departure_station)
         autotextArr = findViewById(R.id.arrival_station)
         recyclerView = findViewById(R.id.journey_recycler)
+        progressBar = findViewById(R.id.progress_bar)
+
+        progressBar.visibility = View.GONE
 
         presenter.onViewTaken(this)
 
@@ -82,9 +86,15 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = viewAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+        
+        progressBar.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
     }
 
     fun buttonClick(view: View) {
+        progressBar.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+
         presenter.onTimesRequested()
     }
 

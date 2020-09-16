@@ -74,14 +74,27 @@
         app:layout_constraintTop_toBottomOf="@id/arrival_station"
         android:onClick="buttonClick"/>
 
-    <view class="androidx.recyclerview.widget.RecyclerView"
-        android:id="@+id/journey_recycler"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/get_times"
         app:layout_constraintBottom_toBottomOf="parent">
-    </view>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+        <view class="androidx.recyclerview.widget.RecyclerView"
+            android:id="@+id/journey_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </view>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
