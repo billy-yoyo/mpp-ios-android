@@ -48,8 +48,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
     override fun onTimesRequested() {
         launch {
-            view.setJourneys(listOf()) // clear journeys
-
             val model = api.getFaresModel(
                 departureStation = stationRepository.getDepartureStation()!!,
                 arrivalStation =  stationRepository.getArrivalStation()!!,
