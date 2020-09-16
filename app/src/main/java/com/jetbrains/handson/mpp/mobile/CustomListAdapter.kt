@@ -23,11 +23,11 @@ class CustomListAdapter(
 
     class CustomViewHolder(private val view: View, private val context: Context): RecyclerView.ViewHolder(view) {
         fun bindItems(journey: Journey) {
-            val depTime = view.findViewById<TextView>(R.id.departure_time)
-            depTime.text = context.resources.getString(R.string.departure_time, formatDateTime(journey.departureTime))
+            val departureTime = view.findViewById<TextView>(R.id.departure_time)
+            departureTime.text = context.resources.getString(R.string.departure_time, formatDateTime(journey.departureTime))
 
-            val arrTime = view.findViewById<TextView>(R.id.arrival_time)
-            arrTime.text = context.resources.getString(R.string.arrival_time, formatDateTime(journey.arrivalTime))
+            val arrivalTime = view.findViewById<TextView>(R.id.arrival_time)
+            arrivalTime.text = context.resources.getString(R.string.arrival_time, formatDateTime(journey.arrivalTime))
 
             val prices = view.findViewById<TextView>(R.id.prices)
 

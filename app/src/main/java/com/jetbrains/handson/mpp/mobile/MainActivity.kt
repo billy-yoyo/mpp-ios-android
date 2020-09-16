@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     private var presenter: ApplicationPresenter = ApplicationPresenter()
 
     // Autocomplete text
-    private lateinit var autotextDep: AutoCompleteTextView
-    private lateinit var autotextArr: AutoCompleteTextView
+    private lateinit var autotextDeparture: AutoCompleteTextView
+    private lateinit var autotextArrival: AutoCompleteTextView
 
     // List of stations
     private lateinit var stations: List<Station>
@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         findViewById<TextView>(R.id.main_text).text = getString(R.string.app_title)
 
-        autotextDep = findViewById(R.id.departure_station)
-        autotextArr = findViewById(R.id.arrival_station)
+        autotextDeparture = findViewById(R.id.departure_station)
+        autotextArrival = findViewById(R.id.arrival_station)
         recyclerView = findViewById(R.id.journey_recycler)
         progressBar = findViewById(R.id.progress_bar)
 
@@ -61,12 +61,12 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         )
 
         adapter.setDropDownViewResource(R.layout.autocomplete_item)
-        autotextDep.setAdapter(adapter)
-        autotextArr.setAdapter(adapter)
+        autotextDeparture.setAdapter(adapter)
+        autotextArrival.setAdapter(adapter)
 
-        autotextDep.onItemClickListener =
+        autotextDeparture.onItemClickListener =
             UpdatePresenterStationListener(true, presenter, adapter)
-        autotextArr.onItemClickListener =
+        autotextArrival.onItemClickListener =
             UpdatePresenterStationListener(false, presenter, adapter)
     }
 
@@ -97,34 +97,34 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     fun buttonClick(view: View) {
-        val depText = autotextDep.text.toString()
-        val arrText = autotextArr.text.toString()
-        val depStation: Station?
-        val arrStation: Station?
+        val departureText = autotextDeparture.text.toString()
+        val arrivalText = autotextArrival.text.toString()
+        val departureStation: Station?
+        val arrivalStation: Station?
 
-        if (depText == "") {
+        if (departureText == "") {
             showAlert("Please enter a departure station")
             return
         }
-        if (arrText == "") {
+        if (arrivalText == "") {
             showAlert("Please enter an arrival station")
             return
         }
-        if (depText != (autotextDep.onItemClickListener as UpdatePresenterStationListener).depName) {
-            depStation = overrideStation(depText)
-            if (depStation == null) {
+        if (departureText != (autotextDeparture.onItemClickListener as UpdatePresenterStationListener).departureName) {
+            departureStation = overrideStation(departureText)
+            if (departureStation == null) {
                 showAlert("Please select a valid departure station")
                 return
             }
-            presenter.setDepartureStation(depStation)
+            presenter.setDepartureStation(departureStation)
         }
-        if (arrText != (autotextArr.onItemClickListener as UpdatePresenterStationListener).arrName) {
-            arrStation = overrideStation(arrText)
-            if (arrStation == null) {
+        if (arrivalText != (autotextArrival.onItemClickListener as UpdatePresenterStationListener).arrivalName) {
+            arrivalStation = overrideStation(arrivalText)
+            if (arrivalStation == null) {
                 showAlert("Please select a valid arrival station")
                 return
             }
-            presenter.setArrivalStation(arrStation)
+            presenter.setArrivalStation(arrivalStation)
         }
 
         progressBar.visibility = View.VISIBLE
@@ -149,16 +149,16 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         private val adapter: ArrayAdapter<Station>
     ) : AdapterView.OnItemClickListener {
         // Track dropdown selections
-        var depName: String = ""
-        var arrName: String = ""
+        var departureName: String = ""
+        var arrivalName: String = ""
 
         override fun onItemClick(parent: AdapterView<*>?, item: View?, position: Int, id: Long) {
             if (isDeparture) {
                 presenter.setDepartureStation(adapter.getItem(position))
-                depName = adapter.getItem(position).toString()
+                departureName = adapter.getItem(position).toString()
             } else {
                 presenter.setArrivalStation(adapter.getItem(position))
-                arrName = adapter.getItem(position).toString()
+                arrivalName = adapter.getItem(position).toString()
             }
         }
     }
