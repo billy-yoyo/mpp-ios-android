@@ -3,8 +3,9 @@ import SharedCode
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var departureStation: DropDown!
+    @IBOutlet weak var arrivalStation: DropDown!
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var stations: UIPickerView!
     @IBOutlet weak var departureStationLabel: UILabel!
     @IBOutlet weak var arrivalStationLabel: UILabel!
     @IBOutlet weak var getTimesButton: UIButton!
@@ -22,39 +23,28 @@ class ViewController: UIViewController {
         departureStationLabel.text = "Departure"
         arrivalStationLabel.text = "Arrival"
         label.text = "TrainBoard"
-        
-        stations.delegate = self
-        stations.dataSource = self
     }
-    
+
     @IBAction func getTimes(_ sender: Any) {
         presenter.onTimesRequested()
     }
     
-    
-}
-
-extension ViewController :  UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return stationData.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        if (component == 0) {
-            presenter.setDepartureStation(station: stationData[row])
-        } else {
-            presenter.setArrivalStation(station: stationData[row])
+    @IBAction func departureEdit(_ sender: DropDown) {
+        sender.optionArray = stationData.map{$0.name}
+        sender.didSelect{ (selectedText, index, id) in
+            self.presenter.setDepartureStation(station: self.stationData[index])
         }
-        
-        return stationData[row].name
     }
+    
+    @IBAction func arrivalEdit(_ sender: DropDown) {
+        sender.optionArray = stationData.map{$0.name}
+        sender.didSelect{ (selectedText, index, id) in
+            self.presenter.setArrivalStation(station: self.stationData[index])
+        }
+    }
+    
 }
-
+ 
 extension ViewController : UITableViewDelegate, UITableViewDataSource {
     func formatDateTime(datetime: String) -> String {
         let dateFormatter = DateFormatter()
@@ -103,8 +93,6 @@ extension ViewController: ApplicationContractView {
             presenter.setDepartureStation(station: stations[0])
             presenter.setArrivalStation(station: stations[0])
         }
-        
-        self.stations.reloadAllComponents()
     }
     
     func showAlert(message: String) {
