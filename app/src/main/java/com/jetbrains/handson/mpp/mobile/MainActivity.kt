@@ -27,6 +27,9 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     private lateinit var autotextDep: AutoCompleteTextView
     private lateinit var autotextArr: AutoCompleteTextView
 
+    // List of stations
+    private lateinit var stations: List<Station>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -49,6 +52,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     override fun setStations(stations: List<Station>) {
+        this.stations = stations
+
         val adapter: ArrayAdapter<Station> = ArrayAdapter<Station>(
             applicationContext,
             R.layout.autocomplete_item,
@@ -92,19 +97,45 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     fun buttonClick(view: View) {
-        if (autotextDep.text.toString() == "") {
+        val depText = autotextDep.text.toString()
+        val arrText = autotextArr.text.toString()
+        val depStation: Station?
+        val arrStation: Station?
+
+        if (depText == "") {
             showAlert("Please enter a departure station")
             return
         }
-        if (autotextArr.text.toString() == "") {
+        if (arrText == "") {
             showAlert("Please enter an arrival station")
             return
+        }
+        if (depText != (autotextDep.onItemClickListener as UpdatePresenterStationListener).depName) {
+            depStation = overrideStation(depText)
+            if (depStation == null) {
+                showAlert("Please select a valid departure station")
+                return
+            }
+            presenter.setDepartureStation(depStation)
+        }
+        if (arrText != (autotextArr.onItemClickListener as UpdatePresenterStationListener).arrName) {
+            arrStation = overrideStation(arrText)
+            if (arrStation == null) {
+                showAlert("Please select a valid arrival station")
+                return
+            }
+            presenter.setArrivalStation(arrStation)
         }
 
         progressBar.visibility = View.VISIBLE
         recyclerView.visibility = View.GONE
 
         presenter.onTimesRequested()
+    }
+
+    private fun overrideStation(text: String) : Station? {
+        val index = stations.map { it.toString().toLowerCase() }.indexOf(text.toLowerCase())
+        return if (index == -1) null else stations[index]
     }
 
     override fun openJourneyView() {
@@ -117,11 +148,17 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         private val presenter: ApplicationPresenter,
         private val adapter: ArrayAdapter<Station>
     ) : AdapterView.OnItemClickListener {
+        // Track dropdown selections
+        var depName: String = ""
+        var arrName: String = ""
+
         override fun onItemClick(parent: AdapterView<*>?, item: View?, position: Int, id: Long) {
             if (isDeparture) {
                 presenter.setDepartureStation(adapter.getItem(position))
+                depName = adapter.getItem(position).toString()
             } else {
                 presenter.setArrivalStation(adapter.getItem(position))
+                arrName = adapter.getItem(position).toString()
             }
         }
     }
