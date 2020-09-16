@@ -23,26 +23,13 @@ class ViewController: UIViewController {
         departureStationLabel.text = "Departure"
         arrivalStationLabel.text = "Arrival"
         label.text = "TrainBoard"
+        
+        print(stationData.count)
     }
 
     @IBAction func getTimes(_ sender: Any) {
         presenter.onTimesRequested()
     }
-    
-    @IBAction func departureEdit(_ sender: DropDown) {
-        sender.optionArray = stationData.map{$0.name}
-        sender.didSelect{ (selectedText, index, id) in
-            self.presenter.setDepartureStation(station: self.stationData[index])
-        }
-    }
-    
-    @IBAction func arrivalEdit(_ sender: DropDown) {
-        sender.optionArray = stationData.map{$0.name}
-        sender.didSelect{ (selectedText, index, id) in
-            self.presenter.setArrivalStation(station: self.stationData[index])
-        }
-    }
-    
 }
  
 extension ViewController : UITableViewDelegate, UITableViewDataSource {
@@ -89,9 +76,13 @@ extension ViewController: ApplicationContractView {
     func setStations(stations: [Station]) {
         stationData = stations;
             
-        if (!stations.isEmpty) {
-            presenter.setDepartureStation(station: stations[0])
-            presenter.setArrivalStation(station: stations[0])
+        departureStation.optionArray = stationData.map{$0.name}
+        departureStation.didSelect{ (selectedText, index, id) in
+            self.presenter.setDepartureStation(station: self.stationData[index])
+        }
+        arrivalStation.optionArray = stationData.map{$0.name}
+        arrivalStation.didSelect{ (selectedText, index, id) in
+            self.presenter.setArrivalStation(station: self.stationData[index])
         }
     }
     

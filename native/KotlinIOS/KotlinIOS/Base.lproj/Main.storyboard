@@ -94,17 +94,11 @@
                                 <rect key="frame" x="32" y="173.5" width="350" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" spellCheckingType="no" enablesReturnKeyAutomatically="YES"/>
-                                <connections>
-                                    <action selector="departureEdit:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="xR2-yO-AH5"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Station..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wf0-n0-cSy" customClass="DropDown" customModule="KotlinIOS" customModuleProvider="target">
                                 <rect key="frame" x="32" y="266.5" width="350" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" spellCheckingType="no"/>
-                                <connections>
-                                    <action selector="arrivalEdit:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="Vnj-Fm-TeI"/>
-                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OG9-bf-afC">
                                 <rect key="frame" x="32" y="223.5" width="350" height="27"/>
