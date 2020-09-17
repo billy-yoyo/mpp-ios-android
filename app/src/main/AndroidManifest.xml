@@ -21,7 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".JourneyInfoActivity">
+        <activity
+            android:name=".JourneyInfoActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
