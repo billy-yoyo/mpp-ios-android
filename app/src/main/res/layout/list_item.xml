@@ -4,34 +4,36 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="#CCFFFFFF"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:padding="10dp"
+    android:layout_marginVertical="4sp">
 
     <TextView
         android:id="@+id/departure_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:fontFamily="@font/light_font"
+        android:textColor="@color/colorMainHeadings"
+        android:textSize="18sp"
+        android:fontFamily="@font/medium_font"
         tools:text="Departs: Test Time"/>
 
     <TextView
         android:id="@+id/arrival_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:fontFamily="@font/light_font"
+        android:textColor="@color/colorMainHeadings"
+        android:textSize="18sp"
+        android:fontFamily="@font/medium_font"
         tools:text="Arrives: Test Time"/>
 
     <TextView
         android:id="@+id/prices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
+        android:textColor="@color/colorMainHeadings"
+        android:textSize="18sp"
         android:fontFamily="@font/medium_font"
         android:gravity="end"
         tools:text="Price: £XX:XX"/>

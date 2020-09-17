@@ -6,4 +6,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Autocomplete">
+        <item name="android:textColor">@color/colorMainHeadings</item>
+        <item name="colorControlNormal">@color/colorMainHeadings</item>
+        <item name="colorControlActivated">@color/colorHighlight</item>
+    </style>
+
 </resources>

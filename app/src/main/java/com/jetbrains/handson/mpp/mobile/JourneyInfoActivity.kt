@@ -3,7 +3,6 @@ package com.jetbrains.handson.mpp.mobile
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jetbrains.handson.mpp.mobile.dataclasses.Journey
@@ -55,6 +54,5 @@ class JourneyInfoActivity : AppCompatActivity(), JourneyInfoContract.View  {
         viewAdapter = CustomJourneyAdapter(tickets, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = viewAdapter
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
     }
 }
