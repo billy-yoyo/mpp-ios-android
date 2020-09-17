@@ -22,6 +22,12 @@ class JourneyViewController: UIViewController {
         
         presenter.onViewTaken(view: self)
     }
+    
+    @IBAction func onDone(_ sender: Any) {
+        self.dismiss(animated: true, completion: {
+            self.presentingViewController?.dismiss(animated: true, completion: nil)
+        })
+    }
 }
 
 extension JourneyViewController : JourneyInfoContractView {
