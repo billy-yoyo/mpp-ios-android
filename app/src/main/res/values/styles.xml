@@ -1,9 +1,9 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorMainHeadings</item>
+        <item name="colorPrimaryDark">@color/colorMainHeadings</item>
+        <item name="colorAccent">@color/colorHighlight</item>
     </style>
 
     <style name="Autocomplete">
