@@ -30,7 +30,11 @@ class ViewController: UIViewController {
     }
     
     func findStationWithName(name: String) -> Station? {
-        guard let index = stationData.firstIndex(where: { $0.name.lowercased() == name.lowercased() }) else {
+        let name = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        
+        guard let index = stationData.firstIndex(where: {
+            $0.name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() == name
+        }) else {
             return nil
         }
         
