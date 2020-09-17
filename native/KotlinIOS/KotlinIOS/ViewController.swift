@@ -124,6 +124,6 @@ extension ViewController: ApplicationContractView {
     }
     
     func openJourneyView() {
-        performSegue(withIdentifier: "showJourneyInfo", sender: nil)
+        performSegue(withIdentifier: "showJourneyInfo", sender: self)
     }
 }
