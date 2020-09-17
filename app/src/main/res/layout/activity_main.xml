@@ -5,6 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         tools:context=".MainActivity">
 
     <ImageView
@@ -49,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20sp"
         android:hint="@string/departure_station_hint"
+        android:inputType="textNoSuggestions"
         android:fontFamily="@font/light_font"
         android:textSize="18sp"
         android:imeOptions="flagNoExtractUi"
@@ -77,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20sp"
         android:hint="@string/arrival_station_hint"
+        android:inputType="textNoSuggestions"
         android:fontFamily="@font/light_font"
         android:textSize="18sp"
         android:imeOptions="flagNoExtractUi"
