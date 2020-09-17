@@ -104,6 +104,8 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         val departureStation: Station?
         val arrivalStation: Station?
 
+        closeKeyboard()
+
         if (departureText == "") {
             showAlert("Please enter a departure station")
             return
@@ -145,6 +147,14 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         startActivity(intent)
     }
 
+    private fun closeKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
     class UpdatePresenterStationListener(
         private val isDeparture: Boolean,
         private val presenter: ApplicationPresenter,
@@ -159,11 +169,11 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
             if (isDeparture) {
                 presenter.setDepartureStation(adapter.getItem(position))
                 departureName = adapter.getItem(position).toString()
-                closeKeyboard()
+                context.closeKeyboard()
             } else {
                 presenter.setArrivalStation(adapter.getItem(position))
                 arrivalName = adapter.getItem(position).toString()
-                closeKeyboard()
+                context.closeKeyboard()
             }
         }
 
