@@ -2,7 +2,6 @@ import UIKit
 import SharedCode
 
 class ViewController: UIViewController {
-
     @IBOutlet weak var departureStation: DropDown!
     @IBOutlet weak var arrivalStation: DropDown!
     @IBOutlet weak var label: UILabel!

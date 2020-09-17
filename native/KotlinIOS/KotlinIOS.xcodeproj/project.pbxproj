@@ -10,6 +10,7 @@
 		10DE5C9D2513A3B1004D4D18 /* title_font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10DE5C9C2513A3B1004D4D18 /* title_font.ttf */; };
 		10DE5CA02513A45A004D4D18 /* light_font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10DE5C9E2513A45A004D4D18 /* light_font.ttf */; };
 		10DE5CA12513A45A004D4D18 /* medium_font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10DE5C9F2513A45A004D4D18 /* medium_font.ttf */; };
+		10DE5CA52513B832004D4D18 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10DE5CA42513B832004D4D18 /* background.jpg */; };
 		10E907E525120DB10057F667 /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E907E425120DB10057F667 /* DropDown.swift */; };
 		47729E0622F447C800B9B36B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E0522F447C800B9B36B /* AppDelegate.swift */; };
 		47729E0822F447C800B9B36B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E0722F447C800B9B36B /* ViewController.swift */; };
@@ -60,6 +61,7 @@
 		10DE5C9C2513A3B1004D4D18 /* title_font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = title_font.ttf; sourceTree = "<group>"; };
 		10DE5C9E2513A45A004D4D18 /* light_font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = light_font.ttf; sourceTree = "<group>"; };
 		10DE5C9F2513A45A004D4D18 /* medium_font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = medium_font.ttf; sourceTree = "<group>"; };
+		10DE5CA42513B832004D4D18 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		10E907E425120DB10057F667 /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		47729E0222F447C800B9B36B /* KotlinIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KotlinIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47729E0522F447C800B9B36B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				B08C486E250FA2C100F46667 /* JourneyViewController.swift */,
 				B08C4872250FBD5B00F46667 /* TicketTableViewCell.swift */,
 				10E907E425120DB10057F667 /* DropDown.swift */,
+				10DE5CA42513B832004D4D18 /* background.jpg */,
 			);
 			path = KotlinIOS;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 			files = (
 				47729E1022F447CA00B9B36B /* LaunchScreen.storyboard in Resources */,
 				47729E0D22F447CA00B9B36B /* Assets.xcassets in Resources */,
+				10DE5CA52513B832004D4D18 /* background.jpg in Resources */,
 				10DE5C9D2513A3B1004D4D18 /* title_font.ttf in Resources */,
 				47729E0B22F447C800B9B36B /* Main.storyboard in Resources */,
 				10DE5CA12513A45A004D4D18 /* medium_font.ttf in Resources */,
