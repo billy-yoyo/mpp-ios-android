@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
     }
 
     private fun overrideStation(text: String) : Station? {
-        val index = stations.map { it.toString().toLowerCase() }.indexOf(text.toLowerCase())
+        val index = stations.map { it.toString().trim().toLowerCase() }.indexOf(text.trim().toLowerCase())
         return if (index == -1) null else stations[index]
     }
 
