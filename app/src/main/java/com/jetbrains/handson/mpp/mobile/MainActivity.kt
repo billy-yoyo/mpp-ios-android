@@ -1,9 +1,11 @@
 package com.jetbrains.handson.mpp.mobile
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -65,9 +67,9 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         autotextArrival.setAdapter(adapter)
 
         autotextDeparture.onItemClickListener =
-            UpdatePresenterStationListener(true, presenter, adapter)
+            UpdatePresenterStationListener(true, presenter, adapter, this)
         autotextArrival.onItemClickListener =
-            UpdatePresenterStationListener(false, presenter, adapter)
+            UpdatePresenterStationListener(false, presenter, adapter, this)
     }
 
     override fun showAlert(message: String) {
@@ -143,10 +145,13 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         startActivity(intent)
     }
 
+
+
     class UpdatePresenterStationListener(
         private val isDeparture: Boolean,
         private val presenter: ApplicationPresenter,
-        private val adapter: ArrayAdapter<Station>
+        private val adapter: ArrayAdapter<Station>,
+        private val context: MainActivity
     ) : AdapterView.OnItemClickListener {
         // Track dropdown selections
         var departureName: String = ""
@@ -156,9 +161,19 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
             if (isDeparture) {
                 presenter.setDepartureStation(adapter.getItem(position))
                 departureName = adapter.getItem(position).toString()
+                closeKeyboard()
             } else {
                 presenter.setArrivalStation(adapter.getItem(position))
                 arrivalName = adapter.getItem(position).toString()
+                closeKeyboard()
+            }
+        }
+
+        private fun closeKeyboard() {
+            val view = context.currentFocus
+            if (view != null) {
+                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
         }
     }
