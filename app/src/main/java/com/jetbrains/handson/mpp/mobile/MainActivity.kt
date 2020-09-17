@@ -145,8 +145,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         startActivity(intent)
     }
 
-
-
     class UpdatePresenterStationListener(
         private val isDeparture: Boolean,
         private val presenter: ApplicationPresenter,

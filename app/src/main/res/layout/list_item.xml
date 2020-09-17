@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="15sp"
+        android:textSize="16sp"
+        android:fontFamily="@font/light_font"
         tools:text="Departs: Test Time"/>
 
     <TextView
@@ -21,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="15sp"
+        android:textSize="16sp"
+        android:fontFamily="@font/light_font"
         tools:text="Arrives: Test Time"/>
 
     <TextView
@@ -29,7 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="15sp"
+        android:textSize="16sp"
+        android:fontFamily="@font/medium_font"
         android:gravity="end"
         tools:text="Price: £XX:XX"/>
 </LinearLayout>

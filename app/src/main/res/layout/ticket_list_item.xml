@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="15sp"/>
+        android:textSize="15sp"
+        android:fontFamily="@font/medium_font"
+        tools:text="Advance Single:"/>
 
     <TextView
         android:id="@+id/ticket_price"
@@ -20,5 +23,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp"
-        android:gravity="end"/>
+        android:fontFamily="@font/medium_font"
+        android:gravity="end"
+        tools:text="£132.90"/>
 </LinearLayout>
