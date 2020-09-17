@@ -101,7 +101,7 @@ class TrainBoardAPI(private val errorReporter: (error: APIErrors) -> Unit) {
             client.get(url.buildString())
         } catch (cause: Throwable) {
             handleGenericError(cause)
-
+            
             FaresModel(listOf())
         }
     }
