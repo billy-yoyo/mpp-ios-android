@@ -169,12 +169,11 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
             if (isDeparture) {
                 presenter.setDepartureStation(adapter.getItem(position))
                 departureName = adapter.getItem(position).toString()
-                context.closeKeyboard()
             } else {
                 presenter.setArrivalStation(adapter.getItem(position))
                 arrivalName = adapter.getItem(position).toString()
-                context.closeKeyboard()
             }
+            context.closeKeyboard()
         }
 
         private fun closeKeyboard() {
