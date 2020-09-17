@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     private var stationData: [Station] = [];
     private var journeyData: [Journey] = [];
     
+    private var selectedDepartureStation: Station? = nil
+    private var selectedArrivalStation: Station? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.onViewTaken(view: self)
@@ -24,6 +27,18 @@ class ViewController: UIViewController {
         departureStationLabel.text = "Departure"
         arrivalStationLabel.text = "Arrival"
         label.text = "TrainBoard"
+    }
+    
+    func findStationWithName(name: String) -> Station? {
+        let name = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        
+        guard let index = stationData.firstIndex(where: {
+            $0.name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() == name
+        }) else {
+            return nil
+        }
+        
+        return stationData[index]
     }
 
     @IBAction func getTimes(_ sender: Any) {
@@ -35,6 +50,26 @@ class ViewController: UIViewController {
             showAlert(message: "Please enter an arrival station")
             return
         }
+        
+        if departureStation.text != selectedDepartureStation?.description() {
+            // attempt to guess the departure station
+            guard let station = findStationWithName(name: departureStation.text!) else {
+                showAlert(message: "Please enter a valid departure station")
+                return
+            }
+            presenter.setDepartureStation(station: station)
+            selectedDepartureStation = station
+        }
+        if arrivalStation.text != selectedArrivalStation?.description() {
+            // attempt to guess the departure station
+            guard let station = findStationWithName(name: arrivalStation.text!) else {
+                showAlert(message: "Please enter a valid arrival station")
+                return
+            }
+            presenter.setArrivalStation(station: station)
+            selectedArrivalStation = station
+        }
+        
         
         journeyData = []
         journeyTable.reloadData()
@@ -89,15 +124,18 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ViewController: ApplicationContractView {
+    
     func setStations(stations: [Station]) {
         stationData = stations;
             
         departureStation.optionArray = stationData.map{$0.description()}
         departureStation.didSelect{ (selectedText, index, id) in
+            self.selectedDepartureStation = self.stationData[index]
             self.presenter.setDepartureStation(station: self.stationData[index])
         }
         arrivalStation.optionArray = stationData.map{$0.description()}
         arrivalStation.didSelect{ (selectedText, index, id) in
+            self.selectedArrivalStation = self.stationData[index]
             self.presenter.setArrivalStation(station: self.stationData[index])
         }
     }
