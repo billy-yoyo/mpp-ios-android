@@ -45,12 +45,12 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         progressBar.visibility = View.GONE
 
-        presenter.onViewTaken(this)
-
         viewAdapter = CustomListAdapter(listOf(), this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = viewAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+
+        presenter.onViewTaken(this)
     }
 
     override fun setStations(stations: List<Station>) {

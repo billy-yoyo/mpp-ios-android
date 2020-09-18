@@ -37,6 +37,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     override fun onViewTaken(view: ApplicationContract.View) {
         this.view = view
         listOfStations()
+        updateViewJourneysFromModel()
     }
 
     private fun listOfStations() {
@@ -48,6 +49,33 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
             view.setStations(stationsList)
         }
+    }
+
+    private fun updateViewJourneysFromModel() {
+        println("attempting to find journeys from existing model...")
+        val model = faresRepository.getFares() ?: return
+
+        val journeys: MutableList<Journey> = mutableListOf()
+
+        model.outboundJourneys.forEachIndexed { id, journey ->
+            if (journey.tickets.isNotEmpty()) {
+                val minPrice = journey.tickets.minBy { it.priceInPennies }!!.priceInPennies
+                val maxPrice = journey.tickets.maxBy { it.priceInPennies }!!.priceInPennies
+                journeys.add(
+                    Journey(
+                        id,
+                        journey.departureTime,
+                        journey.arrivalTime,
+                        minPrice,
+                        maxPrice
+                    )
+                )
+            }
+        }
+
+        println("found ${journeys.size} journeys")
+
+        view.setJourneys(journeys)
     }
 
     override fun onTimesRequested() {
@@ -62,25 +90,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
             faresRepository.setFares(model)
 
-            val journeys: MutableList<Journey> = mutableListOf()
-
-            model.outboundJourneys.forEachIndexed { id, journey ->
-                if (journey.tickets.isNotEmpty()) {
-                    val minPrice = journey.tickets.minBy { it.priceInPennies }!!.priceInPennies
-                    val maxPrice = journey.tickets.maxBy { it.priceInPennies }!!.priceInPennies
-                    journeys.add(
-                        Journey(
-                            id,
-                            journey.departureTime,
-                            journey.arrivalTime,
-                            minPrice,
-                            maxPrice
-                        )
-                    )
-                }
-            }
-
-            view.setJourneys(journeys)
+            updateViewJourneysFromModel()
         }
     }
 
