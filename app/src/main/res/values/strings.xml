@@ -3,7 +3,7 @@
 
     <string name="get_train_times">Get Train Times</string>
     <string name="departure_text">Select departure station:</string>
-    <string name="arrival_text">Select destination:</string>
+    <string name="arrival_text">Select destination station:</string>
 
     <string name="departure_station_hint">Enter departure station…</string>
     <string name="arrival_station_hint">Enter destination station…</string>
