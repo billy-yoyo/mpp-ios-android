@@ -15,7 +15,7 @@ class CustomJourneyAdapter(
     class CustomViewHolder(private val view: View, private val context: Context): RecyclerView.ViewHolder(view) {
         fun bindItems(ticket: Ticket) {
             val ticketType = view.findViewById<TextView>(R.id.ticket_type)
-            ticketType.text = context.resources.getString(R.string.ticket_type, ticket.name)
+            ticketType.text = ticket.name
 
             val price = view.findViewById<TextView>(R.id.ticket_price)
             price.text = context.resources.getString(R.string.ticket_price, ticket.price / 100.0)

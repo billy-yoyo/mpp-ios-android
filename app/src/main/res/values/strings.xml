@@ -1,9 +1,9 @@
 <resources>
     <string name="app_title">TrainBoard</string>
 
-    <string name="get_train_times">Get Train Times</string>
-    <string name="departure_text">Select departure station:</string>
-    <string name="arrival_text">Select destination station:</string>
+    <string name="get_train_times">Get Times</string>
+    <string name="departure_text">Departure</string>
+    <string name="arrival_text">Arrival</string>
 
     <string name="departure_station_hint">Enter departure station…</string>
     <string name="arrival_station_hint">Enter destination station…</string>
@@ -18,6 +18,5 @@
 
     <string name="tickets_subtitle">Tickets for the %s train on %s.</string>
 
-    <string name="ticket_type">Ticket type: %s</string>
-    <string name="ticket_price">Price: £%.2f</string>
+    <string name="ticket_price">£%.2f</string>
 </resources>

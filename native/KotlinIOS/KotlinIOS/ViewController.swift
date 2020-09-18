@@ -107,8 +107,8 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         }
         let journey = journeyData[indexPath.row]
         
-        cell.departureTime.text = "Departs \(formatDateTime(datetime: journey.departureTime))"
-        cell.arrivalTime.text = "Arrives \(formatDateTime(datetime: journey.arrivalTime))"
+        cell.departureTime.text = "Departs: \(formatDateTime(datetime: journey.departureTime))"
+        cell.arrivalTime.text = "Arrives: \(formatDateTime(datetime: journey.arrivalTime))"
         if journey.minPrice == journey.maxPrice {
             cell.priceRange.text = String(format: "Price: £%.2f", Float(journey.minPrice) / 100)
         } else {
