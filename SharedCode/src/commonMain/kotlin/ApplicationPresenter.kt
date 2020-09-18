@@ -52,7 +52,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
     }
 
     private fun updateViewJourneysFromModel() {
-        println("attempting to find journeys from existing model...")
         val model = faresRepository.getFares() ?: return
 
         val journeys: MutableList<Journey> = mutableListOf()
