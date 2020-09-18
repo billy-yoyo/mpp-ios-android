@@ -73,8 +73,6 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
             }
         }
 
-        println("found ${journeys.size} journeys")
-
         view.setJourneys(journeys)
     }
 
