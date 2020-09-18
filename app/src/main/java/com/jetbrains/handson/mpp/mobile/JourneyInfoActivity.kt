@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jetbrains.handson.mpp.mobile.dataclasses.Journey
 import com.jetbrains.handson.mpp.mobile.dataclasses.Ticket
-import java.text.SimpleDateFormat
-import java.util.*
+import com.jetbrains.handson.mpp.mobile.util.DateFormatHelper
 
 class JourneyInfoActivity : AppCompatActivity(), JourneyInfoContract.View  {
     // Requirements for Recycler view
@@ -26,26 +25,14 @@ class JourneyInfoActivity : AppCompatActivity(), JourneyInfoContract.View  {
         presenter.onViewTaken(this)
     }
 
-    private fun formatTime(datetime: String): String {
-        val inputFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZ", Locale.UK)
-        val outputFormatter = SimpleDateFormat("h:mm a" , Locale.UK)
-        val date = inputFormatter.parse(datetime) ?: return datetime
-        return outputFormatter.format(date)
-    }
 
-    private fun formatDate(datetime: String): String {
-        val inputFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZ", Locale.UK)
-        val outputFormatter = SimpleDateFormat("MMM d" , Locale.UK)
-        val date = inputFormatter.parse(datetime) ?: return datetime
-        return outputFormatter.format(date)
-    }
 
     override fun setJourney(journey: Journey) {
         subtitle = findViewById(R.id.subheading)
         subtitle.text = this.resources.getString(
             R.string.tickets_subtitle,
-            formatTime(journey.departureTime),
-            formatDate(journey.departureTime)
+            DateFormatHelper.formatTime(journey.departureTime),
+            DateFormatHelper.formatDate(journey.departureTime)
         )
     }
 

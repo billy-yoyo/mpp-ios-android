@@ -45,10 +45,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         progressBar.visibility = View.GONE
 
-        viewAdapter = CustomListAdapter(listOf(), this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = viewAdapter
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+        setJourneys(listOf())
 
         presenter.onViewTaken(this)
     }
@@ -76,7 +73,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.alert_title)
         builder.setMessage(message)
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setIcon(R.drawable.alert_icon)
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(true)
         alertDialog.show()
@@ -107,17 +104,17 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         closeKeyboard()
 
         if (departureText == "") {
-            showAlert("Please enter a departure station")
+            showAlert("Please enter a departure station.")
             return
         }
         if (arrivalText == "") {
-            showAlert("Please enter an arrival station")
+            showAlert("Please enter an arrival station.")
             return
         }
         if (departureText != (autotextDeparture.onItemClickListener as UpdatePresenterStationListener).departureName) {
             departureStation = overrideStation(departureText)
             if (departureStation == null) {
-                showAlert("Please select a valid departure station")
+                showAlert("Please select a valid departure station.")
                 return
             }
             presenter.setDepartureStation(departureStation)
@@ -125,7 +122,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
         if (arrivalText != (autotextArrival.onItemClickListener as UpdatePresenterStationListener).arrivalName) {
             arrivalStation = overrideStation(arrivalText)
             if (arrivalStation == null) {
-                showAlert("Please select a valid arrival station")
+                showAlert("Please select a valid arrival station.")
                 return
             }
             presenter.setArrivalStation(arrivalStation)
@@ -174,14 +171,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
                 arrivalName = adapter.getItem(position).toString()
             }
             context.closeKeyboard()
-        }
-
-        private fun closeKeyboard() {
-            val view = context.currentFocus
-            if (view != null) {
-                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(view.windowToken, 0)
-            }
         }
     }
 }

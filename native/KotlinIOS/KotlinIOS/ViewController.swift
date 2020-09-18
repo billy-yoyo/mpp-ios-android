@@ -43,18 +43,18 @@ class ViewController: UIViewController {
 
     @IBAction func getTimes(_ sender: Any) {
         if departureStation.text == "" {
-            showAlert(message: "Please enter a departure station")
+            showAlert(message: "Please enter a departure station.")
             return
         }
         if arrivalStation.text == "" {
-            showAlert(message: "Please enter an arrival station")
+            showAlert(message: "Please enter an arrival station.")
             return
         }
         
         if departureStation.text != selectedDepartureStation?.description() {
             // attempt to guess the departure station
             guard let station = findStationWithName(name: departureStation.text!) else {
-                showAlert(message: "Please enter a valid departure station")
+                showAlert(message: "Please enter a valid departure station.")
                 return
             }
             presenter.setDepartureStation(station: station)
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         if arrivalStation.text != selectedArrivalStation?.description() {
             // attempt to guess the departure station
             guard let station = findStationWithName(name: arrivalStation.text!) else {
-                showAlert(message: "Please enter a valid arrival station")
+                showAlert(message: "Please enter a valid arrival station.")
                 return
             }
             presenter.setArrivalStation(station: station)
@@ -79,19 +79,7 @@ class ViewController: UIViewController {
     }
 }
  
-extension ViewController : UITableViewDelegate, UITableViewDataSource {
-    func formatDateTime(datetime: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss.SSSXXX"
-        guard let date: Date = dateFormatter.date(from: datetime) else {
-            return datetime
-        }
-        
-        let prettyDateFormatter = DateFormatter()
-        prettyDateFormatter.dateFormat = "MMM d, h:mm a"
-        return prettyDateFormatter.string(from: date)
-    }
-    
+extension ViewController : UITableViewDelegate, UITableViewDataSource {    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -107,8 +95,8 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         }
         let journey = journeyData[indexPath.row]
         
-        cell.departureTime.text = "Departs: \(formatDateTime(datetime: journey.departureTime))"
-        cell.arrivalTime.text = "Arrives: \(formatDateTime(datetime: journey.arrivalTime))"
+        cell.departureTime.text = "Departs: \(DateFormatHelper().formatDateTime(datetime: journey.departureTime))"
+        cell.arrivalTime.text = "Arrives: \(DateFormatHelper().formatDateTime(datetime: journey.arrivalTime))"
         if journey.minPrice == journey.maxPrice {
             cell.priceRange.text = String(format: "Price: £%.2f", Float(journey.minPrice) / 100)
         } else {
@@ -141,8 +129,8 @@ extension ViewController: ApplicationContractView {
     }
     
     func showAlert(message: String) {
-        let alert = UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
+        let alert = UIAlertController(title: "Warning!", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Close", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

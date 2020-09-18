@@ -17,7 +17,6 @@ class JourneyInfoPresenter : JourneyInfoContract.Presenter() {
     private lateinit var view: JourneyInfoContract.View
 
     override fun onViewTaken(view: JourneyInfoContract.View) {
-        // be happy
         this.view = view
 
         view.setJourney(journeyRepository.getJourney()!!)
