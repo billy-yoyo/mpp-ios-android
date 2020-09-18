@@ -36,11 +36,11 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
     override fun onViewTaken(view: ApplicationContract.View) {
         this.view = view
-        listOfStations()
-        updateViewJourneysFromModel()
+        updateViewStationsFromAPI()
+        updateViewJourneysFromRepository()
     }
 
-    private fun listOfStations() {
+    private fun updateViewStationsFromAPI() {
         launch {
             val stationsModel: StationListModel = api.getStationListModel()
             val stationsList: List<Station> =
@@ -51,7 +51,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
         }
     }
 
-    private fun updateViewJourneysFromModel() {
+    private fun updateViewJourneysFromRepository() {
         val model = faresRepository.getFares() ?: return
 
         val journeys: MutableList<Journey> = mutableListOf()
@@ -87,7 +87,7 @@ class ApplicationPresenter: ApplicationContract.Presenter() {
 
             faresRepository.setFares(model)
 
-            updateViewJourneysFromModel()
+            updateViewJourneysFromRepository()
         }
     }
 

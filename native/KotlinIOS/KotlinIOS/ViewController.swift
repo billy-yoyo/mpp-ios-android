@@ -79,19 +79,7 @@ class ViewController: UIViewController {
     }
 }
  
-extension ViewController : UITableViewDelegate, UITableViewDataSource {
-    func formatDateTime(datetime: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss.SSSXXX"
-        guard let date: Date = dateFormatter.date(from: datetime) else {
-            return datetime
-        }
-        
-        let prettyDateFormatter = DateFormatter()
-        prettyDateFormatter.dateFormat = "MMM d, h:mm a"
-        return prettyDateFormatter.string(from: date)
-    }
-    
+extension ViewController : UITableViewDelegate, UITableViewDataSource {    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -107,8 +95,8 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         }
         let journey = journeyData[indexPath.row]
         
-        cell.departureTime.text = "Departs \(formatDateTime(datetime: journey.departureTime))"
-        cell.arrivalTime.text = "Arrives \(formatDateTime(datetime: journey.arrivalTime))"
+        cell.departureTime.text = "Departs \(DateFormatHelper().formatDateTime(datetime: journey.departureTime))"
+        cell.arrivalTime.text = "Arrives \(DateFormatHelper().formatDateTime(datetime: journey.arrivalTime))"
         if journey.minPrice == journey.maxPrice {
             cell.priceRange.text = String(format: "Price: £%.2f", Float(journey.minPrice) / 100)
         } else {

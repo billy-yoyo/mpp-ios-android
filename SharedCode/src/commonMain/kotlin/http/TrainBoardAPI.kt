@@ -3,6 +3,7 @@ package com.jetbrains.handson.mpp.mobile.http
 import com.jetbrains.handson.mpp.mobile.dataclasses.Station
 import com.jetbrains.handson.mpp.mobile.models.FaresModel
 import com.jetbrains.handson.mpp.mobile.models.StationListModel
+import com.jetbrains.handson.mpp.mobile.util.DateFormatHelper
 import com.soywiz.klock.DateTimeTz
 import io.ktor.client.*
 import io.ktor.client.features.json.*
@@ -50,10 +51,6 @@ class TrainBoardAPI(private val errorReporter: (error: APIErrors) -> Unit) {
         )
     }
 
-    private fun formatDate(date: DateTimeTz): String {
-        return date.format("YYYY-MM-dd'T'HH:mm:ss.SSSXXX")
-    }
-
     private fun handleGenericError(error: Throwable) {
         errorReporter(APIErrors.RequestError)
     }
@@ -88,12 +85,12 @@ class TrainBoardAPI(private val errorReporter: (error: APIErrors) -> Unit) {
         url.parameters.append(fares.journeyType, journeyType)
 
         if (outboundDateTime != null) {
-            url.parameters.append(fares.outboundDateTime, formatDate(outboundDateTime))
+            url.parameters.append(fares.outboundDateTime, DateFormatHelper.formatForInput(outboundDateTime))
             url.parameters.append(fares.outboundIsArriveBy, outboundIsArriveBy.toString())
         }
 
         if (inboundDateTime != null) {
-            url.parameters.append(fares.inboundDateTime, formatDate(inboundDateTime))
+            url.parameters.append(fares.inboundDateTime, DateFormatHelper.formatForInput(inboundDateTime))
             url.parameters.append(fares.inboundIsArriveBy, inboundIsArriveBy.toString())
         }
 

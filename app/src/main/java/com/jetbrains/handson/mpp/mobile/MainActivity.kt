@@ -45,10 +45,7 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
 
         progressBar.visibility = View.GONE
 
-        viewAdapter = CustomListAdapter(listOf(), this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = viewAdapter
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+        setJourneys(listOf())
 
         presenter.onViewTaken(this)
     }
@@ -174,14 +171,6 @@ class MainActivity : AppCompatActivity(), ApplicationContract.View {
                 arrivalName = adapter.getItem(position).toString()
             }
             context.closeKeyboard()
-        }
-
-        private fun closeKeyboard() {
-            val view = context.currentFocus
-            if (view != null) {
-                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(view.windowToken, 0)
-            }
         }
     }
 }

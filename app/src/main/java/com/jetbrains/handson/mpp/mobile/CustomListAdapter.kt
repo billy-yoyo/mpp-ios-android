@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jetbrains.handson.mpp.mobile.dataclasses.Journey
-import java.text.SimpleDateFormat
-import java.util.*
+import com.jetbrains.handson.mpp.mobile.util.DateFormatHelper
 
 
 class CustomListAdapter(
@@ -24,10 +23,16 @@ class CustomListAdapter(
     class CustomViewHolder(private val view: View, private val context: Context): RecyclerView.ViewHolder(view) {
         fun bindItems(journey: Journey) {
             val departureTime = view.findViewById<TextView>(R.id.departure_time)
-            departureTime.text = context.resources.getString(R.string.departure_time, formatDateTime(journey.departureTime))
+            departureTime.text = context.resources.getString(
+                R.string.departure_time,
+                DateFormatHelper.formatDateTime(journey.departureTime)
+            )
 
             val arrivalTime = view.findViewById<TextView>(R.id.arrival_time)
-            arrivalTime.text = context.resources.getString(R.string.arrival_time, formatDateTime(journey.arrivalTime))
+            arrivalTime.text = context.resources.getString(
+                R.string.arrival_time,
+                DateFormatHelper.formatDateTime(journey.arrivalTime)
+            )
 
             val prices = view.findViewById<TextView>(R.id.prices)
 
@@ -43,13 +48,6 @@ class CustomListAdapter(
                     journey.maxPrice / 100.0
                 )
             }
-        }
-
-        private fun formatDateTime(datetime: String): String {
-            val inputFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZ", Locale.UK)
-            val outputFormatter = SimpleDateFormat("MMM d, h:mm a" , Locale.UK)
-            val date = inputFormatter.parse(datetime) ?: return datetime
-            return outputFormatter.format(date)
         }
     }
 
