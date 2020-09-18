@@ -93,12 +93,14 @@
 
     <Button
         android:id="@+id/get_times"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/get_train_times"
         android:textAllCaps="false"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:fontFamily="@font/medium_font"
+        android:textColor="@color/colorMainHeadings"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/arrival_station"
