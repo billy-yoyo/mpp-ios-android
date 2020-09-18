@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10C60F4B2514B0B2000006F8 /* light_font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10C60F482514B0B1000006F8 /* light_font.ttf */; };
+		10C60F4C2514B0B2000006F8 /* medium_font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10C60F492514B0B1000006F8 /* medium_font.ttf */; };
+		10C60F4D2514B0B2000006F8 /* title_font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10C60F4A2514B0B1000006F8 /* title_font.ttf */; };
 		10E907E525120DB10057F667 /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E907E425120DB10057F667 /* DropDown.swift */; };
 		47729E0622F447C800B9B36B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E0522F447C800B9B36B /* AppDelegate.swift */; };
 		47729E0822F447C800B9B36B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E0722F447C800B9B36B /* ViewController.swift */; };
@@ -54,6 +57,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		10C60F482514B0B1000006F8 /* light_font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = light_font.ttf; sourceTree = "<group>"; };
+		10C60F492514B0B1000006F8 /* medium_font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = medium_font.ttf; sourceTree = "<group>"; };
+		10C60F4A2514B0B1000006F8 /* title_font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = title_font.ttf; sourceTree = "<group>"; };
 		10E907E425120DB10057F667 /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		47729E0222F447C800B9B36B /* KotlinIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KotlinIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47729E0522F447C800B9B36B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +106,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10C60F472514B085000006F8 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				10C60F482514B0B1000006F8 /* light_font.ttf */,
+				10C60F492514B0B1000006F8 /* medium_font.ttf */,
+				10C60F4A2514B0B1000006F8 /* title_font.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		47729DF922F447C800B9B36B = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +140,7 @@
 		47729E0422F447C800B9B36B /* KotlinIOS */ = {
 			isa = PBXGroup;
 			children = (
+				10C60F472514B085000006F8 /* fonts */,
 				47729E0522F447C800B9B36B /* AppDelegate.swift */,
 				47729E0722F447C800B9B36B /* ViewController.swift */,
 				B02CC271250BA2E10037124A /* JourneyTableViewCell.swift */,
@@ -262,6 +279,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10C60F4D2514B0B2000006F8 /* title_font.ttf in Resources */,
+				10C60F4B2514B0B2000006F8 /* light_font.ttf in Resources */,
+				10C60F4C2514B0B2000006F8 /* medium_font.ttf in Resources */,
 				47729E1022F447CA00B9B36B /* LaunchScreen.storyboard in Resources */,
 				47729E0D22F447CA00B9B36B /* Assets.xcassets in Resources */,
 				47729E0B22F447C800B9B36B /* Main.storyboard in Resources */,
